@@ -203,7 +203,7 @@
                 <div class="row">
                   <div class="col-sm-8 col-sm-offset-2">
                     <h2 class="module-title font-alt">Bienvenue sur Beel EAT</h2>
-                    <div class="module-subtitle font-serif large-text">Commader votre repas en ligne et recevez une notification quand il est prèt !</div>
+                    <div class="module-subtitle font-serif large-text">Commander votre repas en ligne et recevez une notification quand il est prêt !</div>
                   </div>
                 </div>
                 <div class="row">
