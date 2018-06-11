@@ -1,59 +1,3 @@
-<?php
-// Projet 3 : Connection
-  session_start();
-  if(isset($_SESSION['connect'])){
-    header('location: ../');
-  }
-  require('src/connection.php');
-
-  // Verifie si cookie existe
-  if(!empty($_COOKIE['log']) && !isset($_SESSION['connect'])){
-    $log = htmlspecialchars($_COOKIE['log']);
-
-    $req = $db->prepare('SELECT * FROM users WHERE key_secret = ?');
-    $req->execute(array($log));
-    while($user = $req->fetch()){
-      if($user['pseudo'] != null){
-        $_SESSION['connect'] = 1;
-        $_SESSION['pseudo'] = $user['pseudo'];
-        header('location: ../connection.php?success=1');
-      }
-    }
-    $req->closeCursor();
-  }
-
-  if(!empty($_POST['email']) && !empty($_POST['password'])){
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-    $error    = 1;
-
-    // Crypter
-    $password = "aq1".sha1($password."1254")."25";
-
-    $req = $db->prepare('SELECT * FROM users WHERE email = ?');
-    $req->execute(array($email));
-
-    while($user = $req->fetch()){
-      //print_r(users): print_r afficher tableau
-      if($password == $user['password']){
-        $_SESSION['connect'] = 1;
-        $_SESSION['pseudo'] = $user['pseudo'];
-        $error = 0;
-        // Creer cookie
-        if(isset($_POST['check_connect'])){
-          setcookie('log', $user['key_secret'], time() + 365*24*3600, null, null, false, true);
-        }
-        header('location: ../connection.php?success=1');
-      }
-    }
-    if($error == 1){
-      header('location: ../connection.php?error=1');
-    }
-    $req->closeCursor();
-
-  }
-
-?>
 <!DOCTYPE html>
 <html lang="en-fr" dir="ltr">
 <head>
@@ -152,25 +96,14 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-5 col-sm-offset-3 mb-sm-40">
-                <?php
-                  if(isset($_GET['error'])){
-                    echo '<div class="alert alert-danger" role="alert">
-                            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Authentification impossible.
-                          </div>';
-                  } else if(isset($_GET['success'])){
-                    echo '<div class="alert alert-danger" role="alert">
-                            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Vous etes maintenant connecte.
-                          </div>';
-                  }
-                ?>
                 <h4 class="font-alt">Connection</h4>
                 <hr class="divider-w mb-10">
                 <form class="form" method="post" action="connection.php">
                   <div class="form-group">
-                    <input class="form-control" id="E-mail" required type="text" name="email" placeholder="E-mail"/>
+                    <input class="form-control" id="E-mail" type="text" name="email" placeholder="E-mail"/>
                   </div>
                   <div class="form-group">
-                    <input class="form-control" id="password" required type="password" name="password" placeholder="Password"/>
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Password"/>
                   </div>
                   <div class="form-group">
                     <button class="btn btn-round btn-b">Connection</button>

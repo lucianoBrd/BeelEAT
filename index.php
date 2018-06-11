@@ -106,7 +106,7 @@
       } else{
     ?>
     <!DOCTYPE html>
-    <html lang="en-US" dir="ltr">
+    <html lang="fr" dir="ltr">
       <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
