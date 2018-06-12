@@ -123,11 +123,12 @@
                 </ul>
               </li>
 
-              <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown">Mon compte</a>
+              <li class="dropdown"><a class="dropdown-toggle" href="" data-toggle="dropdown">Mon compte</a>
                 <ul class="dropdown-menu">
                   <li><a href="">Informations</a></li>
                 </ul>
               </li>
+              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs" type="button">Connexion</button>&nbsp;</a></li>
             </ul>
           </div>
         </div>
@@ -145,7 +146,7 @@
         <section class="module">
           <div class="container">
             <div class="row">
-              <div class="col-sm-5 col-sm-offset-3">
+              <div class="col-sm-6 col-sm-offset-3">
                 <?php
                   if(isset($_GET['error'])){
                     if(isset($_GET['pass'])){
@@ -191,7 +192,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6">
-                <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Beel EAT</a>, All Rights Reserved</p>
+                <p class="copyright font-alt">&copy; 2017&nbsp;<a href="../">Beel EAT</a>, All Rights Reserved</p>
               </div>
           </div>
         </footer>

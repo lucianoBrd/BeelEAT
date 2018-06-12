@@ -149,7 +149,7 @@
         <section class="module">
           <div class="container">
             <div class="row">
-              <div class="col-sm-5 col-sm-offset-3 mb-sm-40">
+              <div class="col-sm-6 col-sm-offset-3 mb-sm-40">
                 <?php
                   if(isset($_GET['error'])){
                     echo '<div class="alert alert-danger" role="alert">
@@ -171,7 +171,7 @@
                     <input class="form-control" id="password" required type="password" name="password" placeholder="Password"/>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-round btn-b">Connection</button>
+                    <button class="btn btn-block btn-round btn-b">Connection</button>
                   </div>
                   <div class="form-group"><a href="">Mot de passe oublié?</a></div>
                 </form>
@@ -184,7 +184,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6">
-                <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Beel EAT</a>, All Rights Reserved</p>
+                <p class="copyright font-alt">&copy; 2017&nbsp;<a href="../">Beel EAT</a>, All Rights Reserved</p>
               </div>
           </div>
         </footer>
