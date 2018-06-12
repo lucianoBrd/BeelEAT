@@ -1,5 +1,4 @@
 <?php
-// Projet 3 : Connection
   session_start();
   if(isset($_SESSION['connect'])){
     header('location: ../');
