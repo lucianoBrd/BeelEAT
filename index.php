@@ -156,7 +156,7 @@
                             <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Authentification impossible.
                           </div>';
                   } else if(isset($_GET['success'])){
-                    echo '<div class="alert alert-danger" role="alert">
+                    echo '<div class="alert alert-success" role="alert">
                             <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Vous etes maintenant connecte.
                           </div>';
                   }
