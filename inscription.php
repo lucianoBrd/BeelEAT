@@ -128,13 +128,13 @@
                   <li><a href="">Informations</a></li>
                 </ul>
               </li>
-              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs" type="button">Connexion</button>&nbsp;</a></li>
+              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs pull-left" type="button">Connexion</button>&nbsp;</a></li>
             </ul>
           </div>
         </div>
       </nav>
       <div class="main">
-        <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+        <section class="module bg-dark-30" data-background="assets/images/section-1.jpg">
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">

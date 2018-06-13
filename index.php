@@ -63,7 +63,7 @@
   Document Title
   =============================================
   -->
-  <title>Beel EAT | Connection</title>
+  <title>Beel EAT | Connexion</title>
   <!--
   Favicons
   =============================================
@@ -132,12 +132,13 @@
                   <li><a href="">Informations</a></li>
                 </ul>
               </li>
+              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs pull-left" type="button">Connexion</button>&nbsp;</a></li>
             </ul>
           </div>
         </div>
       </nav>
       <div class="main">
-        <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+        <section class="module bg-dark-30" data-background="assets/images/section-1.jpg">
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
@@ -161,9 +162,9 @@
                           </div>';
                   }
                 ?>
-                <h4 class="font-alt">Connection</h4>
+                <h4 class="font-alt">Connexion</h4>
                 <hr class="divider-w mb-10">
-                <form class="form" method="post" action="connection.php">
+                <form class="form" method="post" action="../">
                   <div class="form-group">
                     <input class="form-control" id="E-mail" required type="text" name="email" placeholder="E-mail"/>
                   </div>
@@ -171,9 +172,16 @@
                     <input class="form-control" id="password" required type="password" name="password" placeholder="Password"/>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-block btn-round btn-b">Connection</button>
+                    <button class="btn btn-block btn-round btn-b">Connexion</button>
                   </div>
                   <div class="form-group"><a href="">Mot de passe oublié?</a></div>
+                  <div class="checkbox">
+                    <label>
+                      <input checked type="checkbox" value="" name="check_connect">
+                      <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                      Connexion automatique
+                    </label>
+                  </div>
                 </form>
               </div>
             </div>
