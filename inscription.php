@@ -151,7 +151,7 @@
               </div>
             </div>
           </div>
-          <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=C2HkDnsDV7U', containment:'.module-video', startAt:0, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
+          <div class="video-player" data-property="{videoURL:'https://youtu.be/LvG2_aFvjVA', containment:'.module-video', startAt:0, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
         </section>
         <section class="module">
           <div class="container">

@@ -308,7 +308,7 @@
           <section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">
             <div class="titan-caption">
               <div class="caption-content">
-                <div class="font-alt mb-30 titan-title-size-1">Hello &amp; <?= $_SESSION['pseudo'] ?></div>
+                <div class="font-alt mb-30 titan-title-size-1">Hello <?= $_SESSION['pseudo'] ?></div>
                 <div class="font-alt mb-40 titan-title-size-4">Beel EAT</div><a class="section-scroll btn btn-border-w btn-round" href="#commande">Commander</a>
               </div>
             </div>
