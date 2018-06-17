@@ -141,8 +141,8 @@
                 <h1 class="module-title font-alt mb-0">S'inscrire</h1>
               </div>
             </div>
-          </div> -->
-        </section>
+          </div>
+        </section> -->
         <section class="module module-video bg-dark-30" data-background="assets/images/section-1.jpg">
           <div class="container">
             <div class="row">

@@ -1,4 +1,43 @@
 <?php
+  define('favicons', '<link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/logo.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/logo.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/images/favicons/logo.png">
+  <meta name="theme-color" content="#ffffff">');
+
+  define('stylesheets', '<!-- Default stylesheets-->
+  <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Template specific stylesheets-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
+  <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
+  <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+  <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+  <!-- Main stylesheet and color file-->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">');
+
+  define('titre', 'Beel EAT | ');
+  define('page', 'Connexion');
+
   session_start();
   require('src/connection.php');
 
@@ -43,7 +82,7 @@
       }
     }
     if($error == 1){
-      header('location: ../?error=1');
+      header('location: ../?error=1&email='.$email.'');
     }
     $req->closeCursor();
 
@@ -63,50 +102,18 @@
   Document Title
   =============================================
   -->
-  <title>Beel EAT | Connexion</title>
+  <title><?= titre.page ?></title>
   <!--
   Favicons
   =============================================
   -->
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/logo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/logo.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/logo.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/logo.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/logo.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/logo.png">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="assets/images/favicons/logo.png">
-  <meta name="theme-color" content="#ffffff">
+  <?= favicons ?>
   <!--
   Stylesheets
   =============================================
 
   -->
-  <!-- Default stylesheets-->
-  <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Template specific stylesheets-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-  <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-  <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-  <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-  <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-  <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-  <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-  <!-- Main stylesheet and color file-->
-  <link href="assets/css/style.css" rel="stylesheet">
-  <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+  <?= stylesheets ?>
 </head>
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
@@ -158,7 +165,7 @@
                           </div>';
                   } else if(isset($_GET['success'])){
                     echo '<div class="alert alert-success" role="alert">
-                            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Vous etes maintenant connecte.
+                            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Succès!</strong> Vous etes maintenant connecte.
                           </div>';
                   }
                 ?>
@@ -166,7 +173,7 @@
                 <hr class="divider-w mb-10">
                 <form class="form" method="post" action="../">
                   <div class="form-group">
-                    <input class="form-control" id="E-mail" required type="text" name="email" placeholder="E-mail"/>
+                    <input class="form-control" id="E-mail" required type="text" name="email" placeholder="E-mail" value="<?= isset($_GET['email']) ? $_GET['email'] : '' ?>"/>
                   </div>
                   <div class="form-group">
                     <input class="form-control" id="password" required type="password" name="password" placeholder="Password"/>
@@ -290,7 +297,7 @@
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
                     <ul class="dropdown-menu">
-                      <li><a href="#commande">Commander</a></li>
+                      <li><a class="section-scroll" href="#commande">Commander</a></li>
                       <li><a href="inscription.php">Inscription</a></li>
                     </ul>
                   </li>
@@ -353,43 +360,43 @@
                 </div>
               </div>
               <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
-                <li class="work-item menu"><a href="portfolio-single-1.html">
+                <li class="work-item menu"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-1.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Plat Dessert Boisson</h3>
                       <div class="work-descr">Menu</div>
                     </div></a></li>
-                <li class="work-item menu"><a href="portfolio-single-1.html">
+                <li class="work-item menu"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-2.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Plat Dessert</h3>
                       <div class="work-descr">Menu</div>
                     </div></a></li>
-                <li class="work-item sandwich"><a href="portfolio-single-1.html">
+                <li class="work-item sandwich"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-3.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Wrap</h3>
                       <div class="work-descr">Sandwich</div>
                     </div></a></li>
-                <li class="work-item sandwich"><a href="portfolio-single-1.html">
+                <li class="work-item sandwich"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-4.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Panini</h3>
                       <div class="work-descr">Sandwich</div>
                     </div></a></li>
-                <li class="work-item dessert"><a href="portfolio-single-1.html">
+                <li class="work-item dessert"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-5.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Donuts</h3>
                       <div class="work-descr">Dessert</div>
                     </div></a></li>
-                <li class="work-item boisson"><a href="portfolio-single-1.html">
+                <li class="work-item boisson"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-6.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
                       <h3 class="work-title">Coca-Cola</h3>
                       <div class="work-descr">Boisson</div>
                     </div></a></li>
-                    <li class="work-item boisson"><a href="portfolio-single-1.html">
+                    <li class="work-item boisson"><a href="shop_checkout.html">
                         <div class="work-image"><img src="assets/images/work-7.jpg" alt="Portfolio Item"/></div>
                         <div class="work-caption font-alt">
                           <h3 class="work-title">Orangina</h3>
@@ -403,7 +410,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm-6">
-                    <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Beel EAT</a>, All Rights Reserved</p>
+                    <p class="copyright font-alt">&copy; 2017&nbsp;<a href="../">Beel EAT</a>, All Rights Reserved</p>
                   </div>
               </div>
             </footer>
