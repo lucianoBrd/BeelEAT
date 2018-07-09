@@ -35,8 +35,19 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">');
 
-  define('titre', 'Beel EAT | ');
-  define('page', 'Connexion');
+  define('titre', 'Beel EAT');
+  define('separateur', ' | ');
+  define('page', 'Se connecter');
+  define('chargement', 'Loading...');
+  define('navMenu', 'Toggle navigation');
+  define('menuAccueil', 'Accueil');
+  define('menuAccueilCommander', 'Commander');
+  define('menuAccueilInscription', 'Inscription');
+  define('menuCompte', 'Mon compte');
+  define('menuCompteInfo', 'Informations');
+  define('boutonConnexion', 'Connexion');
+  define('oublie', 'Mot de passe oublié ?');
+  define('autoConnect', 'Connexion automatique');
 
   session_start();
   require('src/connection.php');
@@ -102,7 +113,7 @@
   Document Title
   =============================================
   -->
-  <title><?= titre.page ?></title>
+  <title><?= titre.separateur.page ?></title>
   <!--
   Favicons
   =============================================
@@ -118,28 +129,28 @@
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
       <div class="page-loader">
-        <div class="loader">Loading...</div>
+        <div class="loader"><?= chargement ?></div>
       </div>
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="../">Beel EAT</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only"><?= navMenu ?></span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="../"><?= titre ?></a>
           </div>
           <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
+              <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown"><?= menuAccueil ?></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#commande">Commander</a></li>
-                  <li><a href="inscription.php">Inscription</a></li>
+                  <li><a href="#commande"><?= menuAccueilCommander ?></a></li>
+                  <li><a href="inscription.php"><?= menuAccueilInscription ?></a></li>
                 </ul>
               </li>
 
-              <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown">Mon compte</a>
+              <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown"><?= menuCompte ?></a>
                 <ul class="dropdown-menu">
-                  <li><a href="">Informations</a></li>
+                  <li><a href=""><?= menuCompteInfo ?></a></li>
                 </ul>
               </li>
-              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs pull-left" type="button">Connexion</button>&nbsp;</a></li>
+              <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs pull-left" type="button"><?= boutonConnexion ?></button>&nbsp;</a></li>
             </ul>
           </div>
         </div>
@@ -149,7 +160,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
-                <h1 class="module-title font-alt mb-0">Se connecter</h1>
+                <h1 class="module-title font-alt mb-0"><?= page ?></h1>
               </div>
             </div>
           </div>
@@ -169,7 +180,7 @@
                           </div>';
                   }
                 ?>
-                <h4 class="font-alt">Connexion</h4>
+                <h4 class="font-alt"><?= page ?></h4>
                 <hr class="divider-w mb-10">
                 <form class="form" method="post" action="../">
                   <div class="form-group">
@@ -179,14 +190,14 @@
                     <input class="form-control" id="password" required type="password" name="password" placeholder="Password"/>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-block btn-round btn-b">Connexion</button>
+                    <button class="btn btn-block btn-round btn-b"><?= boutonConnexion ?></button>
                   </div>
-                  <div class="form-group"><a href="">Mot de passe oublié?</a></div>
+                  <div class="form-group"><a href=""><?= oublie ?></a></div>
                   <div class="checkbox">
                     <label>
                       <input checked type="checkbox" value="" name="check_connect">
                       <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                      Connexion automatique
+                      <?= autoConnect ?>
                     </label>
                   </div>
                 </form>
@@ -326,7 +337,7 @@
                 <div class="row">
                   <div class="col-sm-8 col-sm-offset-2">
                     <h2 class="module-title font-alt">Bienvenue sur Beel EAT</h2>
-                    <div class="module-subtitle font-serif large-text">Commander votre repas en ligne et recevez une notification quand il est prêt !</div>
+                    <div class="module-subtitle font-serif large-text">Commandez votre repas en ligne et recevez une notification quand il est prêt !</div>
                   </div>
                 </div>
                 <div class="row">
@@ -341,7 +352,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm-6 col-sm-offset-3">
-                    <h2 class="module-title font-alt">Choisissez ce que vous souhaiter.</h2>
+                    <h2 class="module-title font-alt">Choisissez ce que vous souhaitez.</h2>
                     <div class="module-subtitle font-serif"></div>
                   </div>
                 </div>
@@ -350,7 +361,7 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <ul class="filter font-alt" id="filters">
-                      <li><a class="current wow fadeInUp" href="#" data-filter="*">Tout nos produits</a></li>
+                      <li><a class="current wow fadeInUp" href="#" data-filter="*">Tous nos produits</a></li>
                       <li><a class="wow fadeInUp" href="#" data-filter=".menu" data-wow-delay="0.2s">Menu</a></li>
                       <li><a class="wow fadeInUp" href="#" data-filter=".sandwich" data-wow-delay="0.4s">Sandwich</a></li>
                       <li><a class="wow fadeInUp" href="#" data-filter=".boisson" data-wow-delay="0.6s">Boisson</a></li>
