@@ -156,7 +156,7 @@
         <section class="module">
           <div class="container">
             <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
+              <div id="error" class="col-sm-6 col-sm-offset-3">
                 <?php
                   if(isset($_GET['error'])){
                     if(isset($_GET['pass'])){
