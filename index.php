@@ -99,6 +99,7 @@
       if($user['pseudo'] != null){
         $_SESSION['connect'] = 1;
         $_SESSION['pseudo'] = $user['pseudo'];
+        $_SESSION['admin'] = $user['admin'];
         header('location: ../?success=1');
       }
     }
@@ -121,6 +122,7 @@
       if($password == $user['password']){
         $_SESSION['connect'] = 1;
         $_SESSION['pseudo'] = $user['pseudo'];
+        $_SESSION['admin'] = $user['admin'];
         $error = 0;
         // Creer cookie
         if(isset($_POST['check_connect'])){
@@ -242,7 +244,7 @@
   </body>
 </html>
 <?php
-  } else{
+} elseif ($_SESSION['admin'] == false) {
 ?>
     <!DOCTYPE html>
     <html lang="fr" dir="ltr">
@@ -454,5 +456,7 @@
     </html>
 
 <?php
-  }
+} else {
+  header('location: admin/templates/admin4_material_design/');
+}
 ?>
