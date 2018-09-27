@@ -6,7 +6,7 @@
 		header('location: '.link);
 	} elseif($_SESSION['admin'] == true) {
 
-		$req = $db->prepare('SELECT * FROM produit');
+		$req = $db->prepare('SELECT * FROM ingredient');
     $req->execute(array());
 ?>
 <!DOCTYPE html>
@@ -224,12 +224,12 @@
 							<i class="icon-basket"></i>
 							Commande</a>
 						</li>
-						<li class="active">
+						<li>
 							<a href="ecommerce_products.php">
 							<i class="icon-handbag"></i>
 							Produit</a>
 						</li>
-						<li>
+						<li class="active">
 							<a href="ecommerce_ingredient.php">
 							<i class="icon-handbag"></i>
 							Ingredient</a>
@@ -361,8 +361,8 @@
 							</div>
 							<div class="actions">
 								<div class="btn-group">
-									<a class="btn btn-default btn-circle" href="ecommerce_products_edit.php" >
-									<i class="fa fa-plus"></i> Nouveau produit
+									<a class="btn btn-default btn-circle" href="ecommerce_ingredient_edit.php">
+									<i class="fa fa-plus"></i> Nouveau ingredient
 									</a>
 								</div>
 							</div>
@@ -460,17 +460,17 @@
 												$class = 'even';
 											}
 											$type="success";
-											if($produit['statut_prod'] == "indisponible"){
+											if($produit['statut_ingre'] == "indisponible"){
 												$type="danger";
 											}
 											echo '<tr role="row" class="'.$class.'">
 												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
-												<td class="sorting_1">'.$produit['id_prod'].'</td>
-												<td>'.$produit['nom_prod'].'</td>
-												<td>'.$produit['stock_prod'].'</td>
-												<td>'.$produit['date_prod'].'</td>
-												<td><span class="label label-sm label-'.$type.'">'.$produit['statut_prod'].'</span></td>
-												<td><a href="ecommerce_products_edit.php?id='.$produit['id_prod'].'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
+												<td class="sorting_1">'.$produit['id_ingre'].'</td>
+												<td>'.$produit['nom_ingre'].'</td>
+												<td>'.$produit['stock_ingre'].'</td>
+												<td>'.$produit['date_ingre'].'</td>
+												<td><span class="label label-sm label-'.$type.'">'.$produit['statut_ingre'].'</span></td>
+												<td><a href="ecommerce_ingredient_edit.php?id='.$produit['id_ingre'].'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
 											</tr>';
 										}
 									?>

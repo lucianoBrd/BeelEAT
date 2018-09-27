@@ -1,13 +1,36 @@
 <?php
 	define('link', '../../../');
+	define('incomplet', '<div class="note note-danger note-shadow">
+		<p>
+			 NOTE: Vous devez remplir tous les champs.
+		</p>
+	</div>');
 	session_start();
 	require(link.'src/connection.php');
+
   if(!isset($_SESSION['connect'])){
 		header('location: '.link);
 	} elseif($_SESSION['admin'] == true) {
+		if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut'])){
+			if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut'])){
 
-		$req = $db->prepare('SELECT * FROM produit');
-    $req->execute(array());
+				$error = 0;
+		    $nom 			= htmlspecialchars($_POST['nom']);
+				$quantite = htmlspecialchars($_POST['quantite']);
+				$statut 	= htmlspecialchars($_POST['statut']);
+
+				$req = $db->prepare('INSERT INTO ingredient(nom_ingre, stock_ingre, statut_ingre)
+														 VALUES (?, ?, ?)');
+				$req->execute(array($nom, $quantite, $statut)) or die(print_r($req->errorInfo()));
+				header('Location: ecommerce_ingredient.php');
+
+			} elseif(!isset($_GET['error'])) {
+				header('Location: ecommerce_ingredient_edit.php?error=1');
+			}
+		}
+		if(isset($_GET['error'])){
+			$error = htmlspecialchars($_GET['error']);
+		}
 ?>
 <!DOCTYPE html>
 
@@ -224,15 +247,15 @@
 							<i class="icon-basket"></i>
 							Commande</a>
 						</li>
-						<li class="active">
+						<li>
 							<a href="ecommerce_products.php">
 							<i class="icon-handbag"></i>
 							Produit</a>
 						</li>
-						<li>
+						<li class="active">
 							<a href="ecommerce_ingredient.php">
 							<i class="icon-handbag"></i>
-							Ingredient</a>
+							ingrdedient</a>
 						</li>
 					</ul>
 				</li>
@@ -348,138 +371,81 @@
 				</li>
 			</ul>
 			<!-- END PAGE BREADCRUMB -->
+			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
+			<?php
+				if(isset($error)){
+					switch($error){
+						case 1: echo incomplet;
+										break;
+						case 2: echo imgIncorrect;
+										break;
+					}
+				}
+			?>
 			<div class="row">
 				<div class="col-md-12">
-					<!-- Begin: life time stats -->
-					<div class="portlet light">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-gift font-green-sharp"></i>
-								<span class="caption-subject font-green-sharp bold uppercase">Products</span>
-								<span class="caption-helper">manage products...</span>
-							</div>
-							<div class="actions">
-								<div class="btn-group">
-									<a class="btn btn-default btn-circle" href="ecommerce_products_edit.php" >
-									<i class="fa fa-plus"></i> Nouveau produit
-									</a>
+					<form class="form-horizontal form-row-seperated" method="post" action="ecommerce_ingredient_edit.php" enctype="multipart/form-data">
+						<div class="portlet light">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="icon-basket font-green-sharp"></i>
+										<span class="caption-subject font-green-sharp bold uppercase">
+										Edit ingrdedient </span>
+										<span class="caption-helper">Man Tops</span>
+									</div>
+									<div class="actions btn-set">
+										<a href="ecommerce_ingredient.php" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>
+										<button type="submit" class="btn green-haze btn-circle"><i class="fa fa-check"></i> Save</button>
+									</div>
 								</div>
-							</div>
-						</div>
-						<div class="portlet-body">
-							<div class="table-container">
-								<div class="table-actions-wrapper">
-									<span>
-									</span>
-									<select class="table-group-action-input form-control input-inline input-small input-sm">
-										<option value="">Select...</option>
-										<option value="publish">Publish</option>
-										<option value="unpublished">Un-publish</option>
-										<option value="delete">Delete</option>
-									</select>
-									<button class="btn btn-sm yellow table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
+								<div class="portlet-body">
+									<div class="tabbable">
+										<ul class="nav nav-tabs">
+											<li class="active">
+												<a href="#tab_general" data-toggle="tab">
+												General </a>
+											</li>
+										</ul>
+										<div class="tab-content no-space">
+											<div class="tab-pane active" id="tab_general">
+												<div class="form-body">
+													<div class="form-group">
+														<label class="col-md-2 control-label">Nom: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control" name="nom" placeholder="">
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-2 control-label">Quantité: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control" name="quantite" placeholder="">
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-2 control-label">Statut: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<select class="table-group-action-input form-control input-medium" name="statut">
+																<option value="">Select...</option>
+																<option value="disponible">Disponible</option>
+																<option value="indisponible">Indisponible</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<table class="table table-striped table-bordered table-hover" id="datatable_products">
-								<thead>
-								<tr role="row" class="heading">
-									<th width="1%">
-										<input type="checkbox" class="group-checkable">
-									</th>
-									<th width="10%">
-										 ID
-									</th>
-									<th width="15%">
-										 Product&nbsp;Name
-									</th>
-									<th width="15%">
-										 Quantity
-									</th>
-									<th width="25%">
-										 Date&nbsp;Created
-									</th>
-									<th width="10%">
-										 Status
-									</th>
-									<th width="10%">
-										 Actions
-									</th>
-								</tr>
-								<tr role="row" class="filter">
-									<td>
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_id">
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_name">
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<input type="text" class="form-control form-filter input-sm" name="product_quantity_from" placeholder="From"/>
-										</div>
-										<input type="text" class="form-control form-filter input-sm" name="product_quantity_to" placeholder="To"/>
-									</td>
-									<td>
-										<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_from" placeholder="From">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										<div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_to " placeholder="To">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-									</td>
-									<td>
-										<select name="product_status" class="form-control form-filter input-sm">
-											<option value="">Select...</option>
-											<option value="published">Published</option>
-											<option value="notpublished">Not Published</option>
-											<option value="deleted">Deleted</option>
-										</select>
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
-										</div>
-										<button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
-									</td>
-								</tr>
-								</thead>
-								<tbody>
-									<?php
-										$compt = 0;
-										while($produit = $req->fetch()){
-											if($compt%2 == 0){
-												$class = 'odd';
-											} else {
-												$class = 'even';
-											}
-											$type="success";
-											if($produit['statut_prod'] == "indisponible"){
-												$type="danger";
-											}
-											echo '<tr role="row" class="'.$class.'">
-												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
-												<td class="sorting_1">'.$produit['id_prod'].'</td>
-												<td>'.$produit['nom_prod'].'</td>
-												<td>'.$produit['stock_prod'].'</td>
-												<td>'.$produit['date_prod'].'</td>
-												<td><span class="label label-sm label-'.$type.'">'.$produit['statut_prod'].'</span></td>
-												<td><a href="ecommerce_products_edit.php?id='.$produit['id_prod'].'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
-											</tr>';
-										}
-									?>
-								</tbody>
-								</table>
-							</div>
 						</div>
-					</div>
-					<!-- End: life time stats -->
+					</form>
 				</div>
 			</div>
 			<!-- END PAGE CONTENT-->
@@ -521,21 +487,20 @@
 <script type="text/javascript" src="../../assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="../../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="../../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+<script src="../../assets/global/plugins/plupload/js/plupload.full.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../../assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
 <script src="../../assets/admin/layout4/scripts/demo.js" type="text/javascript"></script>
 <script src="../../assets/global/scripts/datatable.js"></script>
-<script src="../../assets/admin/pages/scripts/ecommerce-products.js"></script>
+<script src="../../assets/admin/pages/scripts/ecommerce-products-edit.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-<script>
-        jQuery(document).ready(function() {
-           Metronic.init(); // init metronic core components
-Layout.init(); // init current layout
-Demo.init(); // init demo features
-        });
-    </script>
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

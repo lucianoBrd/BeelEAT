@@ -1,13 +1,104 @@
 <?php
 	define('link', '../../../');
+	define('incomplet', '<div class="note note-danger note-shadow">
+		<p>
+			 NOTE: Vous devez remplir tous les champs.
+		</p>
+	</div>');
+	define('imgIncorrect', '<div class="note note-danger note-shadow">
+		<p>
+			 NOTE: L\'image est incorrecte.
+		</p>
+	</div>');
+	define('idIncorrect', '<div class="note note-danger note-shadow">
+		<p>
+			 NOTE: Impossible de récupérer les informations. <a href="ecommerce_products.php">Retour</a>
+		</p>
+	</div>');
 	session_start();
 	require(link.'src/connection.php');
+
   if(!isset($_SESSION['connect'])){
 		header('location: '.link);
 	} elseif($_SESSION['admin'] == true) {
+		if(!isset($_GET['id'])){
+			if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut']) && isset($_POST['type']) && isset($_POST['prix'])){
+				if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut']) && !empty($_POST['type']) && !empty($_POST['prix'])){
 
-		$req = $db->prepare('SELECT * FROM produit');
-    $req->execute(array());
+					$error = 0;
+			    $nom 			= htmlspecialchars($_POST['nom']);
+					$quantite = htmlspecialchars($_POST['quantite']);
+					$statut 	= htmlspecialchars($_POST['statut']);
+					$type 	= htmlspecialchars($_POST['type']);
+					$prix 	= htmlspecialchars($_POST['prix']);
+
+					$req = $db->prepare('INSERT INTO produit(nom_prod, stock_prod, statut_prod, type_prod, prix_prod)
+															 VALUES (?, ?, ?, ?, ?)');
+					$req->execute(array($nom, $quantite, $statut, $type, $prix)) or die(print_r($req->errorInfo()));
+
+					if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+						$req = $db->query('SELECT * FROM produit WHERE id_prod=(SELECT MAX(id_prod) FROM produit)');
+						while($produit = $req->fetch()){
+							$idProd = $produit['id_prod'];
+						}
+						$req->closeCursor();
+						if($_FILES['image']['size'] <= 3000000){
+				      $informationsImage = pathinfo($_FILES['image']['name']);
+				      $extentionImage    = $informationsImage['extension'];
+				      $extentionsAccepte = array('png', 'gif', 'jpg', 'jpeg');
+
+				      if(in_array($extentionImage, $extentionsAccepte)){
+				        $img_taille = $_FILES['image']['size'];
+				        $img_nom    = basename($_FILES['image']['name']);
+								$name 			= time().rand().rand().'.'.$extentionImage;
+				        $nomUpload  = '../../assets/global/img/upload/'.$name;
+				        move_uploaded_file($_FILES['image']['tmp_name'], $nomUpload);
+
+								$link = "admin/assets/global/img/upload/".$name;;
+
+				        $req = $db->prepare('INSERT INTO images(img_size, img_type, img_name, link, produit_id)
+				                             VALUES (?, ?, ?, ?, ?)');
+				        $req->execute(array($img_taille, $extentionImage, $img_nom, $link, $idProd)) or die(print_r($req->errorInfo()));
+							} else {
+								$error = 1;
+								$req = $db->prepare('DELETE FROM produit WHERE id_prod=?');
+								$req->execute(array($idProd));
+								header('Location: ecommerce_products_edit.php?error=2');
+							}
+						} else {
+							$error = 1;
+							$req = $db->prepare('DELETE FROM produit WHERE id_prod=?');
+							$req->execute(array($idProd));
+							header('Location: ecommerce_products_edit.php?error=2');
+						}
+					}
+					if($error == 0){
+						header('Location: ecommerce_products.php');
+				  }
+				} elseif(!isset($_GET['error'])) {
+					header('Location: ecommerce_products_edit.php?error=1');
+				}
+			}
+	  } else {
+			$id = htmlspecialchars($_GET['id']);
+			$req = $db->prepare('SELECT * FROM produit LEFT JOIN images ON images.produit_id = produit.id_prod WHERE id_prod=?');
+			$req->execute(array($id));
+			if($req->rowCount() == 0){
+				header('Location: ecommerce_products_edit.php?error=3');
+			}
+			while($produit = $req->fetch()){
+				$pNom 		= $produit['nom_prod'];
+				$pStock 	= $produit['stock_prod'];
+				$pPrix 		= $produit['prix_prod'];
+				$pStatut 	= $produit['statut_prod'];
+				$pType 		= $produit['type_prod'];
+				$pLink		= $produit['link'];
+				$pImgName = $produit['img_name'];
+			}
+		}
+		if(isset($_GET['error'])){
+			$error = htmlspecialchars($_GET['error']);
+		}
 ?>
 <!DOCTYPE html>
 
@@ -230,9 +321,9 @@
 							Produit</a>
 						</li>
 						<li>
-							<a href="ecommerce_ingredient.php">
-							<i class="icon-handbag"></i>
-							Ingredient</a>
+							<a href="ecommerce_products_edit.html">
+							<i class="icon-pencil"></i>
+							Modifier Produit</a>
 						</li>
 					</ul>
 				</li>
@@ -348,138 +439,147 @@
 				</li>
 			</ul>
 			<!-- END PAGE BREADCRUMB -->
+			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
+			<?php
+				if(isset($error)){
+					switch($error){
+						case 1: echo incomplet;
+										break;
+						case 2: echo imgIncorrect;
+										break;
+						case 3: echo idIncorrect;
+										break;
+					}
+				}
+			?>
+
 			<div class="row">
 				<div class="col-md-12">
-					<!-- Begin: life time stats -->
-					<div class="portlet light">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-gift font-green-sharp"></i>
-								<span class="caption-subject font-green-sharp bold uppercase">Products</span>
-								<span class="caption-helper">manage products...</span>
-							</div>
-							<div class="actions">
-								<div class="btn-group">
-									<a class="btn btn-default btn-circle" href="ecommerce_products_edit.php" >
-									<i class="fa fa-plus"></i> Nouveau produit
-									</a>
+					<form class="form-horizontal form-row-seperated" method="post" action="ecommerce_products_edit.php" enctype="multipart/form-data">
+						<div class="portlet light">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="icon-basket font-green-sharp"></i>
+										<span class="caption-subject font-green-sharp bold uppercase">
+										Edit Product </span>
+										<span class="caption-helper">Man Tops</span>
+									</div>
+									<div class="actions btn-set">
+										<a href="ecommerce_products.php" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>
+										<button type="submit" class="btn green-haze btn-circle"><i class="fa fa-check"></i> Save</button>
+									</div>
 								</div>
-							</div>
-						</div>
-						<div class="portlet-body">
-							<div class="table-container">
-								<div class="table-actions-wrapper">
-									<span>
-									</span>
-									<select class="table-group-action-input form-control input-inline input-small input-sm">
-										<option value="">Select...</option>
-										<option value="publish">Publish</option>
-										<option value="unpublished">Un-publish</option>
-										<option value="delete">Delete</option>
-									</select>
-									<button class="btn btn-sm yellow table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
+								<div class="portlet-body">
+									<div class="tabbable">
+										<ul class="nav nav-tabs">
+											<li class="active">
+												<a href="#tab_general" data-toggle="tab">
+												General </a>
+											</li>
+											<li>
+												<a href="#tab_images" data-toggle="tab">
+												Images </a>
+											</li>
+										</ul>
+										<div class="tab-content no-space">
+											<div class="tab-pane active" id="tab_general">
+												<div class="form-body">
+													<div class="form-group">
+														<label class="col-md-2 control-label">Nom: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control" name="nom" placeholder="" <?=isset($id)? 'value="'.$pNom.'"' : ''?>>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-2 control-label">Quantité: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control" name="quantite" placeholder="" <?=isset($id)? 'value="'.$pStock.'"' : ''?>>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-md-2 control-label">Prix: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<input type="text" class="form-control" name="prix" placeholder="" <?=isset($id)? 'value="'.$pPrix.'"' : ''?>>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-2 control-label">Statut: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<select class="table-group-action-input form-control input-medium" name="statut">
+																<option value="">Select...</option>
+																<option value="disponible" <?=isset($id) && $pStatut=="disponible"? 'selected' : ''?>>Disponible</option>
+																<option value="publie" <?=isset($id) && $pStatut=="publie"? 'selected' : ''?>>Publié</option>
+																<option value="indisponible" <?=isset($id) && $pStatut=="indisponible"? 'selected' : ''?>>Indisponible</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-md-2 control-label">Type: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<select class="table-group-action-input form-control input-medium" name="type">
+																<option value="">Select...</option>
+																<option value="sandwich" <?=isset($id) && $pType=="sandwich"? 'selected' : ''?>>Sandwich</option>
+																<option value="boisson" <?=isset($id) && $pType=="boisson"? 'selected' : ''?>>Boisson</option>
+																<option value="dessert" <?=isset($id) && $pType=="dessert"? 'selected' : ''?>>Dessert</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="tab_images">
+												<div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
+													<a id="tab_images_uploader_pickfiles" href="javascript:;" class="btn yellow">
+														<input type="file" name="image"/>
+													</a>
+												</div>
+												<div class="row">
+													<div id="tab_images_uploader_filelist" class="col-md-6 col-sm-12">
+													</div>
+												</div>
+												<table class="table table-bordered table-hover">
+												<thead>
+												<tr role="row" class="heading">
+													<th width="16%">
+														 Image
+													</th>
+													<th width="25%">
+														 Label
+													</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr>
+													<td>
+														<?=isset($id)? '<a href="'.link.$pLink.'" class="fancybox-button" data-rel="fancybox-button">
+														<img class="img-responsive" src="'.link.$pLink.'" alt="'.$pImgName.'">
+														</a>' : ''?>
+													</td>
+													<td>
+														<?=isset($id)? '<input type="text" class="form-control" name="imgName" value="'.$pImgName.'">' : ''?>
+													</td>
+												</tr>
+
+												</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
 								</div>
-								<table class="table table-striped table-bordered table-hover" id="datatable_products">
-								<thead>
-								<tr role="row" class="heading">
-									<th width="1%">
-										<input type="checkbox" class="group-checkable">
-									</th>
-									<th width="10%">
-										 ID
-									</th>
-									<th width="15%">
-										 Product&nbsp;Name
-									</th>
-									<th width="15%">
-										 Quantity
-									</th>
-									<th width="25%">
-										 Date&nbsp;Created
-									</th>
-									<th width="10%">
-										 Status
-									</th>
-									<th width="10%">
-										 Actions
-									</th>
-								</tr>
-								<tr role="row" class="filter">
-									<td>
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_id">
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_name">
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<input type="text" class="form-control form-filter input-sm" name="product_quantity_from" placeholder="From"/>
-										</div>
-										<input type="text" class="form-control form-filter input-sm" name="product_quantity_to" placeholder="To"/>
-									</td>
-									<td>
-										<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_from" placeholder="From">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										<div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_to " placeholder="To">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-									</td>
-									<td>
-										<select name="product_status" class="form-control form-filter input-sm">
-											<option value="">Select...</option>
-											<option value="published">Published</option>
-											<option value="notpublished">Not Published</option>
-											<option value="deleted">Deleted</option>
-										</select>
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
-										</div>
-										<button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
-									</td>
-								</tr>
-								</thead>
-								<tbody>
-									<?php
-										$compt = 0;
-										while($produit = $req->fetch()){
-											if($compt%2 == 0){
-												$class = 'odd';
-											} else {
-												$class = 'even';
-											}
-											$type="success";
-											if($produit['statut_prod'] == "indisponible"){
-												$type="danger";
-											}
-											echo '<tr role="row" class="'.$class.'">
-												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
-												<td class="sorting_1">'.$produit['id_prod'].'</td>
-												<td>'.$produit['nom_prod'].'</td>
-												<td>'.$produit['stock_prod'].'</td>
-												<td>'.$produit['date_prod'].'</td>
-												<td><span class="label label-sm label-'.$type.'">'.$produit['statut_prod'].'</span></td>
-												<td><a href="ecommerce_products_edit.php?id='.$produit['id_prod'].'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
-											</tr>';
-										}
-									?>
-								</tbody>
-								</table>
-							</div>
 						</div>
-					</div>
-					<!-- End: life time stats -->
+					</form>
 				</div>
 			</div>
 			<!-- END PAGE CONTENT-->
@@ -521,21 +621,20 @@
 <script type="text/javascript" src="../../assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="../../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="../../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+<script src="../../assets/global/plugins/plupload/js/plupload.full.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../../assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../../assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
 <script src="../../assets/admin/layout4/scripts/demo.js" type="text/javascript"></script>
 <script src="../../assets/global/scripts/datatable.js"></script>
-<script src="../../assets/admin/pages/scripts/ecommerce-products.js"></script>
+<script src="../../assets/admin/pages/scripts/ecommerce-products-edit.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-<script>
-        jQuery(document).ready(function() {
-           Metronic.init(); // init metronic core components
-Layout.init(); // init current layout
-Demo.init(); // init demo features
-        });
-    </script>
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

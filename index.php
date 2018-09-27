@@ -245,6 +245,8 @@
 </html>
 <?php
 } elseif ($_SESSION['admin'] == false) {
+  $req = $db->prepare('SELECT * FROM produit JOIN images ON images.produit_id = produit.id_prod WHERE statut_prod = "publie"');
+  $req->execute(array());
 ?>
     <!DOCTYPE html>
     <html lang="fr" dir="ltr">
@@ -378,6 +380,16 @@
                 </div>
               </div>
               <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
+                <?php
+                  while($produit = $req->fetch()){
+                    echo '<li class="work-item '.$produit['type_prod'].'"><a href="shop_checkout.html">
+                        <div class="work-image"><img src="'.$produit['link'].'" alt="'.$produit['img_name'].'"/></div>
+                        <div class="work-caption font-alt">
+                          <h3 class="work-title">'.$produit['nom_prod'].'</h3>
+                          <div class="work-descr">'.$produit['type_prod'].'</div>
+                        </div></a></li>';
+                  }
+                ?>
                 <li class="work-item menu"><a href="shop_checkout.html">
                     <div class="work-image"><img src="assets/images/work-1.jpg" alt="Portfolio Item"/></div>
                     <div class="work-caption font-alt">
