@@ -245,7 +245,7 @@
 </html>
 <?php
 } elseif ($_SESSION['admin'] == false) {
-  $req = $db->prepare('SELECT * FROM produit JOIN images ON images.produit_id = produit.id_prod WHERE statut_prod = "publie"');
+  $req = $db->prepare('SELECT * FROM produit JOIN image ON image.produit_id = produit.id_prod WHERE statut_prod = "publie"');
   $req->execute(array());
 ?>
     <!DOCTYPE html>

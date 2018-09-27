@@ -56,7 +56,7 @@
 
 								$link = "admin/assets/global/img/upload/".$name;;
 
-				        $req = $db->prepare('INSERT INTO images(img_size, img_type, img_name, link, produit_id)
+				        $req = $db->prepare('INSERT INTO image(img_size, img_type, img_name, link, produit_id)
 				                             VALUES (?, ?, ?, ?, ?)');
 				        $req->execute(array($img_taille, $extentionImage, $img_nom, $link, $idProd)) or die(print_r($req->errorInfo()));
 							} else {
@@ -81,7 +81,7 @@
 			}
 	  } else {
 			$id = htmlspecialchars($_GET['id']);
-			$req = $db->prepare('SELECT * FROM produit LEFT JOIN images ON images.produit_id = produit.id_prod WHERE id_prod=?');
+			$req = $db->prepare('SELECT * FROM produit LEFT JOIN image ON image.produit_id = produit.id_prod WHERE id_prod=?');
 			$req->execute(array($id));
 			if($req->rowCount() == 0){
 				header('Location: ecommerce_products_edit.php?error=3');
