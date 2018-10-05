@@ -45,7 +45,7 @@
 						if($_FILES['image']['size'] <= 3000000){
 				      $informationsImage = pathinfo($_FILES['image']['name']);
 				      $extentionImage    = $informationsImage['extension'];
-				      $extentionsAccepte = array('png', 'gif', 'jpg', 'jpeg');
+				      $extentionsAccepte = array('png', 'jpg', 'jpeg');
 
 				      if(in_array($extentionImage, $extentionsAccepte)){
 				        $img_taille = $_FILES['image']['size'];
@@ -456,7 +456,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<form class="form-horizontal form-row-seperated" method="post" action="ecommerce_products_edit.php" enctype="multipart/form-data">
+					<form class="form-horizontal form-row-seperated" method="post" action="ecommerce_products_edit.php<?=isset($id)? '?id='.$id : ''?>" enctype="multipart/form-data">
 						<div class="portlet light">
 								<div class="portlet-title">
 									<div class="caption">
