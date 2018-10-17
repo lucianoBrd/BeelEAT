@@ -469,6 +469,6 @@
 
 <?php
 } else {
-  header('location: admin/templates/admin4_material_design/');
+  header('location: admin/');
 }
 ?>
