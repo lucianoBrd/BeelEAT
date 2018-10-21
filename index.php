@@ -55,6 +55,12 @@
   define('success', '<div class="alert alert-success" role="alert">
   <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Succès!</strong> Vous etes maintenant connecte.
   </div>');
+  define('COMMANDE_FALSE', '<div class="alert alert-danger" role="alert">
+    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Une erreur est survenue.
+  </div>');
+  define('COMMANDE_TRUE', '<div class="alert alert-success" role="alert">
+  <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Succès!</strong> Votre commande à bien été passée, vous allez recevoir un email avec tous les détails.
+  </div>');
 
   define('footer', '<hr class="divider-d">
   <footer class="footer bg-dark">
@@ -99,6 +105,7 @@
       if($user['pseudo'] != null){
         $_SESSION['connect'] = 1;
         $_SESSION['pseudo'] = $user['pseudo'];
+        $_SESSION['id'] = $user['id'];
         $_SESSION['admin'] = $user['admin'];
         header('location: ../?success=1');
       }
@@ -122,6 +129,7 @@
       if($password == $user['password']){
         $_SESSION['connect'] = 1;
         $_SESSION['pseudo'] = $user['pseudo'];
+        $_SESSION['id'] = $user['id'];
         $_SESSION['admin'] = $user['admin'];
         $error = 0;
         // Creer cookie
@@ -245,6 +253,9 @@
 </html>
 <?php
 } elseif ($_SESSION['admin'] == false) {
+  if(isset($_GET['commande'])){
+    $commande = htmlspecialchars($_GET['commande']);
+  }
   $req = $db->prepare('SELECT * FROM produit JOIN image ON image.produit_id = produit.id_prod WHERE statut_prod = "publie"');
   $req->execute(array());
 ?>
@@ -344,6 +355,16 @@
             <section class="module" id="about">
               <div class="container">
                 <div class="row">
+                  <?php
+                    if(isset($commande)){
+                      switch($commande){
+                        case 'true' : echo COMMANDE_TRUE;
+                                      break;
+                        case 'false' : echo COMMANDE_FALSE;
+                                       break;
+                      }
+                    }
+                  ?>
                   <div class="col-sm-8 col-sm-offset-2">
                     <h2 class="module-title font-alt">Bienvenue sur Beel EAT</h2>
                     <div class="module-subtitle font-serif large-text">Commandez votre repas en ligne et recevez une notification quand il est prêt !</div>
@@ -389,49 +410,23 @@
                           <div class="work-descr">'.$produit['type_prod'].'</div>
                         </div></a></li>';
                   }
-                ?>
-                <li class="work-item menu"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-1.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Plat Dessert Boisson</h3>
-                      <div class="work-descr">Menu</div>
-                    </div></a></li>
-                <li class="work-item menu"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-2.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Plat Dessert</h3>
-                      <div class="work-descr">Menu</div>
-                    </div></a></li>
-                <li class="work-item sandwich"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-3.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Wrap</h3>
-                      <div class="work-descr">Sandwich</div>
-                    </div></a></li>
-                <li class="work-item sandwich"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-4.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Panini</h3>
-                      <div class="work-descr">Sandwich</div>
-                    </div></a></li>
-                <li class="work-item dessert"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-5.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Donuts</h3>
-                      <div class="work-descr">Dessert</div>
-                    </div></a></li>
-                <li class="work-item boisson"><a href="shop_checkout.html">
-                    <div class="work-image"><img src="assets/images/work-6.jpg" alt="Portfolio Item"/></div>
-                    <div class="work-caption font-alt">
-                      <h3 class="work-title">Coca-Cola</h3>
-                      <div class="work-descr">Boisson</div>
-                    </div></a></li>
-                    <li class="work-item boisson"><a href="shop_checkout.html">
-                        <div class="work-image"><img src="assets/images/work-7.jpg" alt="Portfolio Item"/></div>
+                  $req = $db->prepare('SELECT * FROM menu LEFT JOIN image ON image.produit_id = id_menu WHERE statut_menu = "publie"');
+                  $req->execute(array());
+                  while($produit = $req->fetch()){
+                    if($produit['link'] == null){
+                      $linkImg = 'assets/images/section-1.jpg';
+                    } else {
+                      $linkImg = $produit['link'];
+                    }
+                    echo '<li class="work-item menu"><a href="shop.php?id='.$produit['id_menu'].'">
+                        <div class="work-image"><img src="'.$linkImg.'" alt="'.$produit['img_name'].'"/></div>
                         <div class="work-caption font-alt">
-                          <h3 class="work-title">Orangina</h3>
-                          <div class="work-descr">Boisson</div>
-                        </div></a></li>
+                          <h3 class="work-title">'.$produit['nom_menu'].'</h3>
+                          <div class="work-descr">Menu</div>
+                        </div></a></li>';
+                  }
+                ?>
+
               </ul>
             </section>
 

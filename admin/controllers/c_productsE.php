@@ -34,7 +34,7 @@
 				        $img_taille = $_FILES['image']['size'];
 				        $img_nom    = basename($_FILES['image']['name']);
 								$name 			= time().rand().rand().'.'.$extentionImage;
-				        $nomUpload  = '../../assets/global/img/upload/'.$name;
+				        $nomUpload  = 'assets/global/img/upload/'.$name;
 				        move_uploaded_file($_FILES['image']['tmp_name'], $nomUpload);
 
 								$link = "admin/assets/global/img/upload/".$name;;

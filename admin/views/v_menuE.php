@@ -128,7 +128,7 @@
 																						if($produit->getType() == 'sandwich'){
 																				?>
 																				<li>
-																					<label><?='<input type="checkbox" name="product['.$produit->getType().']['.$produit->getProdId().']" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
+																					<label><?='<input type="checkbox" name="'.$produit->getNom().'" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
 																				</li>
 																				<?php
 																					}
@@ -144,7 +144,7 @@
 																						if($produit->getType() == 'boisson'){
 																				?>
 																				<li>
-																					<label><?='<input type="checkbox" name="product['.$produit->getType().']['.$produit->getProdId().']" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
+																					<label><?='<input type="checkbox" name="'.$produit->getNom().'" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
 																				</li>
 																				<?php
 																					}
@@ -160,7 +160,7 @@
 																						if($produit->getType() == 'dessert'){
 																				?>
 																				<li>
-																					<label><?='<input type="checkbox" name="product['.$produit->getType().']['.$produit->getProdId().']" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
+																					<label><?='<input type="checkbox" name="'.$produit->getNom().'" value="'.$produit->getProdId().'">'.$produit->getNom()?></label>
 																				</li>
 																				<?php
 																					}

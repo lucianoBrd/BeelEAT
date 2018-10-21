@@ -1,3 +1,68 @@
+<?php
+  define('ID_INCORRECT', '<div class="alert alert-danger" role="alert">
+    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Une erreur est survenue.
+  </div>');
+
+  session_start();
+  require('src/connection.php');
+
+  if(!isset($_SESSION['connect'])){
+    header('location: ../');
+  } elseif($_SESSION['admin'] == false) {
+    if(isset($_GET['1'])){
+
+      $req = $db->prepare('INSERT INTO commande(user_comm, prix_comm, statut_comm, menu_comm)
+                           VALUES (?, ?, ?, ?)');
+      $req->execute(array($_SESSION['id'], $_GET['prix'], 'preparation', $_GET['id']));
+
+      $req = $db->query('SELECT * FROM commande WHERE id_comm=(SELECT MAX(id_comm) FROM commande)');
+      while($produit = $req->fetch()){
+        $idComm = $produit['id_comm'];
+      }
+      $req->closeCursor();
+
+      $req = $db->prepare('INSERT INTO liste_prod_comm(id_prod, id_comm)
+                           VALUES (?, ?)');
+      $req->execute(array($_GET['1'], $idComm));
+      if(isset($_GET['2'])){
+        $req = $db->prepare('INSERT INTO liste_prod_comm(id_prod, id_comm)
+                             VALUES (?, ?)');
+        $req->execute(array($_GET['2'], $idComm));
+      }
+      if(isset($_GET['3'])){
+        $req = $db->prepare('INSERT INTO liste_prod_comm(id_prod, id_comm)
+                             VALUES (?, ?)');
+        $req->execute(array($_GET['3'], $idComm));
+      }
+      header('Location: ../?commande=true#about');
+    }
+    if(isset($_GET['id']) && !isset($_GET['1'])){
+      $id = htmlspecialchars($_GET['id']);
+      $menu = array();
+      $i = 0;
+      foreach ( $_POST as $post => $val )  {
+        $menu[$i] = $val;
+        $i++;
+      }
+      $re = $db->prepare('SELECT * FROM menu WHERE id_menu = ?');
+      $re->execute(array($id));
+      if($re->rowCount() == 0){
+        header('Location: shop_checkout.php?error=1');
+      }
+      while($prod = $re->fetch()){
+        $nom = $prod['nom_menu'];
+        $prix = $prod['prix_menu'];
+      }
+    }
+
+    if(isset($_GET['error'])){
+			$error = htmlspecialchars($_GET['error']);
+		}
+  } else {
+    header('location: admin/');
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
   <head>
@@ -96,42 +161,33 @@
                 <table class="table table-striped table-border checkout-table">
                   <tbody>
                     <tr>
-                      <th class="hidden-xs">Item</th>
-                      <th>Description</th>
+                      <th>Item</th>
                       <th class="hidden-xs">Prix</th>
                       <th>Quantité</th>
                       <th>Total</th>
                       <th>Supprimer</th>
                     </tr>
                     <tr>
-                      <td class="hidden-xs"><a href="#"><img src="assets/images/" alt="Menu"/></a></td>
                       <td>
-                        <h5 class="product-title font-alt">Menu</h5>
+                        <h5 class="product-title font-alt"><?=$nom?></h5>
+                        <?php
+                          foreach ($menu as $prod) {
+                            $re = $db->prepare('SELECT * FROM produit WHERE id_prod = ?');
+                            $re->execute(array($prod));
+                            while($produit = $re->fetch()){
+                              echo '<h6>'.$produit['nom_prod'].'</h6>';
+                            }
+                          }
+                        ?>
                       </td>
                       <td class="hidden-xs">
-                        <h5 class="product-title font-alt">20.00€</h5>
+                        <h5 class="product-title font-alt"><?=$prix?>€</h5>
                       </td>
                       <td>
                         <input class="form-control" type="number" name="" value="1" max="50" min="1"/>
                       </td>
                       <td>
-                        <h5 class="product-title font-alt">20.00€</h5>
-                      </td>
-                      <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <td class="hidden-xs"><a href="#"><img src="assets/images/" alt="Sandwich"/></a></td>
-                      <td>
-                        <h5 class="product-title font-alt">Sandwich</h5>
-                      </td>
-                      <td class="hidden-xs">
-                        <h5 class="product-title font-alt">20.00€</h5>
-                      </td>
-                      <td>
-                        <input class="form-control" type="number" name="" value="1" max="50" min="1"/>
-                      </td>
-                      <td>
-                        <h5 class="product-title font-alt">20.00€</h5>
+                        <h5 class="product-title font-alt"><?=$prix?>€</h5>
                       </td>
                       <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td>
                     </tr>
@@ -142,7 +198,14 @@
             <div class="row">
               <div class="col-sm-3 col-sm-offset-9">
                 <div class="form-group">
-                  <button class="btn btn-block btn-round btn-d pull-right" type="submit">Valider la commande</button>
+                  <a class="btn btn-block btn-round btn-d pull-right" href="shop_checkout.php?<?php
+                      $i = 1;
+                      echo 'id='.$id.'&prix='.$prix;
+                      foreach ($menu as $prod) {
+                        echo '&'.$i.'='.$prod;
+                        $i++;
+                      }
+                    ?>">Valider la commande</a>
                 </div>
               </div>
             </div>
@@ -155,15 +218,15 @@
                     <tbody>
                       <tr>
                         <th>Total de la commande :</th>
-                        <td>40.00€</td>
+                        <td><?=$prix?>€</td>
                       </tr>
                       <tr>
                         <th>Frais de livraisons :</th>
-                        <td>2.00€</td>
+                        <td>0.00€</td>
                       </tr>
                       <tr class="shop-Cart-totalprice">
                         <th>Total :</th>
-                        <td>42.00€</td>
+                        <td><?=$prix?>€</td>
                       </tr>
                     </tbody>
                   </table>
