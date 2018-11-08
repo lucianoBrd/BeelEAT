@@ -12,6 +12,10 @@
         </div>
       </div>
       <hr class="divider-w pt-20">
+      <?php
+        require_once(PATH_VIEWS.'alert.php');
+        if(!isset($alert)){
+      ?>
       <div class="row">
         <div class="col-sm-12">
           <table class="table table-striped table-border checkout-table">
@@ -25,25 +29,22 @@
               </tr>
               <tr>
                 <td>
-                  <h5 class="product-title font-alt"><?=$nom?></h5>
+                  <h5 class="product-title font-alt"><?=$menu->getNom()?></h5>
                   <?php
-                    foreach ($menu as $prod) {
-                      $re = $db->prepare('SELECT * FROM produit WHERE id_prod = ?');
-                      $re->execute(array($prod));
-                      while($produit = $re->fetch()){
-                        echo '<h6>'.$produit['nom_prod'].'</h6>';
-                      }
+                    foreach ($listeProd as $prod) {
+                      echo '<h6>'.$prod[0]->getNom().'</h6>
+                            <img src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
                     }
                   ?>
                 </td>
                 <td class="hidden-xs">
-                  <h5 class="product-title font-alt"><?=$prix?>€</h5>
+                  <h5 class="product-title font-alt"><?=$menu->getPrix()?>€</h5>
                 </td>
                 <td>
                   <input class="form-control" type="number" name="" value="1" max="50" min="1"/>
                 </td>
                 <td>
-                  <h5 class="product-title font-alt"><?=$prix?>€</h5>
+                  <h5 class="product-title font-alt"><?=$menu->getPrix()?>€</h5>
                 </td>
                 <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td>
               </tr>
@@ -54,14 +55,7 @@
       <div class="row">
         <div class="col-sm-3 col-sm-offset-9">
           <div class="form-group">
-            <a class="btn btn-block btn-round btn-d pull-right" href="shop_checkout.php?<?php
-                $i = 1;
-                echo 'id='.$id.'&prix='.$prix;
-                foreach ($menu as $prod) {
-                  echo '&'.$i.'='.$prod;
-                  $i++;
-                }
-              ?>">Valider la commande</a>
+            <a class="btn btn-block btn-round btn-d pull-right" href="?page=commande">Valider la commande</a>
           </div>
         </div>
       </div>
@@ -74,7 +68,7 @@
               <tbody>
                 <tr>
                   <th>Total de la commande :</th>
-                  <td><?=$prix?>€</td>
+                  <td><?=$menu->getPrix()?>€</td>
                 </tr>
                 <tr>
                   <th>Frais de livraisons :</th>
@@ -82,14 +76,17 @@
                 </tr>
                 <tr class="shop-Cart-totalprice">
                   <th>Total :</th>
-                  <td><?=$prix?>€</td>
+                  <td><?=$menu->getPrix()?>€</td>
                 </tr>
               </tbody>
             </table>
-            <button class="btn btn-lg btn-block btn-round btn-d" type="submit">Valider la commande</button>
+            <a class="btn btn-lg btn-block btn-round btn-d" href="?page=commande">Valider la commande</a>
           </div>
         </div>
       </div>
+      <?php
+        }
+      ?>
     </div>
   </section>
 <?php require_once(PATH_VIEWS.'footer.php');?>

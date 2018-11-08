@@ -1,32 +1,28 @@
 <?php
-require('src/connection.php');
+require_once(PATH_MODELS.'UserDAO.php');
+require_once(PATH_ENTITY.'User.php');
+$userDAO = new UserDAO();
 
 if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password_confirm'])){
   $pseudo           = $_POST['pseudo'];
   $email            = $_POST['email'];
   $password         = $_POST['password'];
   $password_confirm = $_POST['password_confirm'];
-  $error = 0;
+  $error = false;
 
   // Test mdp identiques
   if($password != $password_confirm){
-    header('location: ../inscription.php?error=1&pass=1');
-    $error = 1;
+    $error = 'PASS';
   }
 
   // Test mail existe
-  $req = $db->prepare('SELECT count(*) as numberEmail FROM users WHERE email = ?');
-  $req->execute(array($email));
+  $email_verification = $userDAO->getNbUserByEmail($email);
 
-  while($email_verification = $req->fetch()){
-    if($email_verification['numberEmail'] != 0){
-      header('location: ../inscription.php?error=1&email=1');
-      $error = 1;
-    }
+  if($email_verification['numberEmail'] != 0){
+    $error = 'EMAIL';
   }
-  $req->closeCursor();
 
-  if($error == 0){
+  if($error == false){
     // Hash
     $secret = sha1($email).time();
     $secret = sha1($secret).time().time();
@@ -36,11 +32,21 @@ if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['passwor
     $password = "aq1".sha1($password."1254")."25";
 
     // Envoie de la requete
-    $req = $db->prepare('INSERT INTO users(pseudo, email, password, key_secret) VALUES (?, ?, ?, ?)');
-    $req->execute(array($pseudo, $email, $password, $secret)) or die(print_r($req->errorInfo()));
-    header('location: ../inscription.php?success=1');
+    $user = new User(null, null, $pseudo, $email, $password, null, $secret);
+    $insert = $userDAO->newUser($user);
+    if($insert){
+      header('location: ../?page=inscription&error=SUCCESS');
+    } else {
+      header('location: ../?page=inscription&error=ERREUR');
+    }
+  } else {
+    header('location: ../?page=inscription&error='.$error);
   }
 
+}
+if(isset($_GET['error'])){
+  $error = htmlspecialchars($_GET['error']);
+  $alert = choixAlert($error);
 }
 require_once(PATH_VIEWS.$page.'.php');
 ?>

@@ -13,17 +13,35 @@
             <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
               <ul class="dropdown-menu">
                 <li><a href="#commande">Commander</a></li>
-                <li><a href="inscription.php">Inscription</a></li>
+                <?php
+                  if(!isset($_SESSION['connect'])){
+                ?>
+                <li><a href="?page=inscription">Inscription</a></li>
+                <?php
+                  }
+                ?>
               </ul>
             </li>
 
+            <?php
+              if(isset($_SESSION['connect'])){
+            ?>
             <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown">Mon compte</a>
               <ul class="dropdown-menu">
                 <li><a href="">Informations</a></li>
                 <li><a href="?page=disconnection">Déconnection</a></li>
               </ul>
             </li>
+            <?php
+              }
+            ?>
+            <?php
+              if(!isset($_SESSION['connect'])){
+            ?>
             <li class="dropdown"><a href="../"><button class="btn btn-border-w btn-round btn-xs pull-left" type="button">Connexion</button>&nbsp;</a></li>
+            <?php
+              }
+            ?>
           </ul>
         </div>
       </div>

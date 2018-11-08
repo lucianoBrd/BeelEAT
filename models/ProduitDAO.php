@@ -55,6 +55,30 @@ class ProduitDAO extends DAO{
     else return null;
   }
 
+  public function getProduitJoinImage(){
+    $requete = 'SELECT * FROM produit JOIN image ON image.produit_id = produit.id_prod WHERE statut_prod = "publie"';
+    $donnees = array();
+    $res = $this->queryAll($requete, $donnees);
+
+    if($res)
+    {
+      $prodImgListe = array();
+      $i = 0;
+      foreach ($res as $produit) {
+        $prodImgListe[$i][0] = new Produit($produit['id_prod'], $produit['nom_prod'], $produit['stock_prod'], $produit['date_prod'], $produit['statut_prod'], $produit['type_prod'], $produit['prix_prod']);
+        if($produit['link'] == null){
+          $linkImg = 'assets/images/section-1.jpg';
+        } else {
+          $linkImg = $produit['link'];
+        }
+        $prodImgListe[$i][1] = new Image(null, null, $produit['nom_prod'], $linkImg, null);
+        $i++;
+      }
+      return $prodImgListe;
+    }
+    else return null;
+  }
+
   public function getLastProduitID(){
     $requete = "SELECT * FROM produit WHERE id_prod=(SELECT MAX(id_prod) FROM produit)";
     $donnees = array();

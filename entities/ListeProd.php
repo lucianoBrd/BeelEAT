@@ -19,7 +19,7 @@ class ListeProd
     return $this->_id_liste_prod;
   }
 
-  public function setListeProdId($id_menu){
+  public function setListeProdId($id_liste_prod){
     $this->_id_liste_prod = $id_liste_prod;
   }
 

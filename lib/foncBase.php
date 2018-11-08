@@ -23,3 +23,34 @@ function choixAlertAdmin($message)
   }
   return $alert;
 }
+
+function choixAlert($message)
+{
+  $alert = array();
+  switch($message)
+  {
+    case 'INCONNUE' :
+      $alert['messageAlert'] = ERREUR;
+      break;
+    case 'COMMANDE_FALSE' :
+      $alert['messageAlert'] = ERREUR_COMM;
+      break;
+    case 'EMAIL' :
+      $alert['messageAlert'] = MAIL;
+      break;
+    case 'PASS' :
+      $alert['messageAlert'] = MDP;
+      break;
+    case 'SUCCESS' :
+      $alert['messageAlert'] = INSCRIPTION;
+      $alert['classAlert'] = "success";
+      break;
+    case 'COMMANDE_TRUE' :
+      $alert['messageAlert'] = COMMANDE;
+      $alert['classAlert'] = "success";
+      break;
+    default :
+      $alert['messageAlert'] = MESSAGE_ERREUR;
+  }
+  return $alert;
+}

@@ -2,6 +2,7 @@ window.onload = function () {
     var choose = document.querySelectorAll(".choose");
     var send = document.getElementById("send");
     var input = document.querySelectorAll("input");
+    var toptop = document.querySelector(".scroll-up");
 
     var div = document.createElement("div");
     div.className = "alert alert-danger";
@@ -65,6 +66,7 @@ window.onload = function () {
         div.removeChild(div.lastChild);
         div.appendChild(p);
         h2.insertBefore(div, h2.children[0]);
+        toptop.children[0].click();
         // On envoie pas le formulaire
         event.preventDefault();
       }

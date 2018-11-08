@@ -1,38 +1,30 @@
 <?php
-require('src/connection.php');
+require_once(PATH_MODELS.'ListeProdDAO.php');
+require_once(PATH_MODELS.'MenuDAO.php');
+$listeProdDAO = new ListeProdDAO();
+$menuDAO = new MenuDAO();
 
 if(!isset($_SESSION['connect'])){
   header('location: ../');
 } elseif($_SESSION['admin'] == false) {
-  require('admin/entities/Produit.php');
   if(isset($_GET['id'])){
     $id = htmlspecialchars($_GET['id']);
-    $prod = array();
-    $re = $db->prepare('SELECT * FROM liste_prod JOIN produit ON liste_prod.id_prod = produit.id_prod WHERE id_menu = ?');
-    $re->execute(array($id));
-    if($re->rowCount() == 0){
-      header('Location: shop.php?error=1');
-    }
-    $i = 0;
-    while($produit = $re->fetch()){
-      $prod[$i] = new Produit($produit['id_prod'], $produit['nom_prod'], $produit['type_prod']);
-      $i++;
+    $prodListe = $listeProdDAO->getListeProduitById($id);
+    if($prodListe == null){
+      header('Location: ../?page=shop&error=ERREUR');
     }
 
-    $re = $db->prepare('SELECT * FROM menu WHERE id_menu = ?');
-    $re->execute(array($id));
-    while($menu = $re->fetch()){
-      $titre = $menu['nom_menu'];
-      $prix = $menu['prix_menu'];
+    $menu = $menuDAO->getMenuById($id);
+    if($menu == null){
+      header('Location: ../?page=shop&error=ERREUR');
     }
   } elseif(!isset($_GET['error'])) {
-    header('Location: shop.php?error=1');
+    header('Location: ../?page=shop&error=ERREUR');
   }
   if(isset($_GET['error'])){
     $error = htmlspecialchars($_GET['error']);
+    $alert = choixAlert($error);
   }
-} else {
-  header('location: admin/');
 }
 require_once(PATH_VIEWS.$page.'.php');
 ?>

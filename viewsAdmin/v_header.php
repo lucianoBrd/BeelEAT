@@ -146,7 +146,7 @@
 							<li class="divider">
 							</li>
 							<li>
-								<a href="<?= link.'disconnection.php' ?>">
+								<a href="?page=disconnection">
 								<i class="icon-key"></i> Déconnexion </a>
 							</li>
 						</ul>

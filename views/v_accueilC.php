@@ -15,16 +15,9 @@
   <section class="module" id="about">
     <div class="container">
       <div class="row">
-        <?php
-          if(isset($commande)){
-            switch($commande){
-              case 'true' : echo COMMANDE_TRUE;
-                            break;
-              case 'false' : echo COMMANDE_FALSE;
-                             break;
-            }
-          }
-        ?>
+
+        <?php require_once(PATH_VIEWS.'alert.php');?>
+
         <div class="col-sm-8 col-sm-offset-2">
           <h2 class="module-title font-alt">Bienvenue sur Beel EAT</h2>
           <div class="module-subtitle font-serif large-text">Commandez votre repas en ligne et recevez une notification quand il est prêt !</div>
@@ -62,26 +55,19 @@
     </div>
     <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
       <?php
-        while($produit = $req->fetch()){
-          echo '<li class="work-item '.$produit['type_prod'].'"><a href="shop_checkout.html">
-              <div class="work-image"><img src="'.$produit['link'].'" alt="'.$produit['img_name'].'"/></div>
+        foreach($produitImgListe as $produit){
+          echo '<li class="work-item '.$produit[0]->getType().'"><a href="shop_checkout.html">
+              <div class="work-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/></div>
               <div class="work-caption font-alt">
-                <h3 class="work-title">'.$produit['nom_prod'].'</h3>
-                <div class="work-descr">'.$produit['type_prod'].'</div>
+                <h3 class="work-title">'.$produit[0]->getNom().'</h3>
+                <div class="work-descr">'.$produit[0]->getType().'</div>
               </div></a></li>';
         }
-        $req = $db->prepare('SELECT * FROM menu LEFT JOIN image ON image.produit_id = id_menu WHERE statut_menu = "publie"');
-        $req->execute(array());
-        while($produit = $req->fetch()){
-          if($produit['link'] == null){
-            $linkImg = 'assets/images/section-1.jpg';
-          } else {
-            $linkImg = $produit['link'];
-          }
-          echo '<li class="work-item menu"><a href="shop.php?id='.$produit['id_menu'].'">
-              <div class="work-image"><img src="'.$linkImg.'" alt="'.$produit['img_name'].'"/></div>
+        foreach($menuImgListe as $menu){
+          echo '<li class="work-item menu"><a href="?page=shop&id='.$menu[0]->getMenuId().'">
+              <div class="work-image"><img src="'.$menu[1]->getLink().'" alt="'.$menu[1]->getName().'"/></div>
               <div class="work-caption font-alt">
-                <h3 class="work-title">'.$produit['nom_menu'].'</h3>
+                <h3 class="work-title">'.$menu[0]->getNom().'</h3>
                 <div class="work-descr">Menu</div>
               </div></a></li>';
         }

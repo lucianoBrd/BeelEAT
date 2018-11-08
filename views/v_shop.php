@@ -6,44 +6,28 @@
 <div class="main">
   <section class="module-small">
     <div class="container">
-      <form method="post" action="shop_checkout.php?id=<?=isset($id)?$id:''?>" enctype="multipart/form-data">
+      <form method="post" action="?page=newComm<?=isset($id)?'&id='.$id:''?>" enctype="multipart/form-data">
       <div class="row">
-        <?php
-          if(isset($error)){
-            switch($error){
-              case 1: echo ID_INCORRECT;
-                      break;
-            }
-          }
-        ?>
+
+        <?php require_once(PATH_VIEWS.'alert.php');?>
+
         <div class="col-sm-6 col-sm-offset-3">
-          <h2 class="module-title font-alt"><?=isset($id)?$titre:''?></h2>
-          <div class="module-subtitle font-serif"><?=isset($id)?$prix:''?>€</div>
+          <h2 class="module-title font-alt"><?=$menu != null?$menu->getNom():''?></h2>
+          <div class="module-subtitle font-serif"><?=$menu != null?$menu->getPrix():''?>€</div>
           <div class="module-subtitle font-serif">Sandwich</div>
           <input type="text" name="sandwich" placeholder="" value="" style="display: none;">
         </div>
       </div>
       <div class="row multi-columns-row">
         <?php
-          foreach ($prod as $produit) {
-            if($produit->getType() == 'sandwich'){
-              $req = $db->prepare('SELECT * FROM image WHERE produit_id = ?');
-              $req->execute(array($produit->getProdId()));
-              if($req->rowCount() == 0){
-                $linkImg = 'assets/images/section-1.jpg';
-                $nameImg = $produit->getNom();
-              } else {
-                while($image = $req->fetch()){
-                  $linkImg = $image['link'];
-                  $nameImg = $image['img_name'];
-                }
-              }
+          foreach ($prodListe as $produit) {
+            if($produit[0]->getType() == 'sandwich'){
               echo '<div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="shop-item">
-                  <div class="shop-item-image"><img src="'.$linkImg.'" alt="'.$nameImg.'"/>
-                    <div class="shop-item-detail"><button name="sandwich" class="btn btn-round btn-b choose" value="'.$produit->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
+                  <div class="shop-item-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/>
+                    <div class="shop-item-detail"><button name="sandwich" class="btn btn-round btn-b choose" value="'.$produit[0]->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
                   </div>
-                  <h4 class="shop-item-title font-alt">'.$produit->getNom().'</h4>
+                  <h4 class="shop-item-title font-alt">'.$produit[0]->getNom().'</h4>
                 </div>
               </div>';
             }
@@ -56,25 +40,14 @@
             </div>
           </div>
           <?php
-            foreach ($prod as $produit) {
-              if($produit->getType() == 'boisson'){
-                $req = $db->prepare('SELECT * FROM image WHERE produit_id = ?');
-                $req->execute(array($produit->getProdId()));
-                if($req->rowCount() == 0){
-                  $linkImg = 'assets/images/section-1.jpg';
-                  $nameImg = $produit->getNom();
-                } else {
-                  while($image = $req->fetch()){
-                    $linkImg = $image['link'];
-                    $nameImg = $image['img_name'];
-                  }
-                }
+            foreach ($prodListe as $produit) {
+              if($produit[0]->getType() == 'boisson'){
                 echo '<div class="col-sm-6 col-md-3 col-lg-3">
                   <div class="shop-item">
-                    <div class="shop-item-image"><img src="'.$linkImg.'" alt="'.$nameImg.'"/>
-                      <div class="shop-item-detail"><button name="boisson" class="btn btn-round btn-b choose" value="'.$produit->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
+                    <div class="shop-item-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/>
+                      <div class="shop-item-detail"><button name="boisson" class="btn btn-round btn-b choose" value="'.$produit[0]->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
                     </div>
-                    <h4 class="shop-item-title font-alt">'.$produit->getNom().'</h4>
+                    <h4 class="shop-item-title font-alt">'.$produit[0]->getNom().'</h4>
                   </div>
                 </div>';
               }
@@ -88,27 +61,14 @@
             </div>
           </div>
           <?php
-            foreach ($prod as $produit) {
-              if($produit->getType() == 'dessert'){
-
-                $req = $db->prepare('SELECT * FROM image WHERE produit_id = ?');
-                $req->execute(array($produit->getProdId()));
-                if($req->rowCount() == 0){
-                  $linkImg = 'assets/images/section-1.jpg';
-                  $nameImg = $produit->getNom();
-                } else {
-                  while($image = $req->fetch()){
-                    $linkImg = $image['link'];
-                    $nameImg = $image['img_name'];
-                  }
-                }
-
+            foreach ($prodListe as $produit) {
+              if($produit[0]->getType() == 'dessert'){
                 echo '<div class="col-sm-6 col-md-3 col-lg-3">
                   <div class="shop-item">
-                    <div class="shop-item-image"><img src="'.$linkImg.'" alt="'.$nameImg.'"/>
-                      <div class="shop-item-detail"><button name="dessert" class="btn btn-round btn-b choose" value="'.$produit->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
+                    <div class="shop-item-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/>
+                      <div class="shop-item-detail"><button name="dessert" class="btn btn-round btn-b choose" value="'.$produit[0]->getProdId().'"><span class="icon-basket">Choisir</span></button></div>
                     </div>
-                    <h4 class="shop-item-title font-alt">'.$produit->getNom().'</h4>
+                    <h4 class="shop-item-title font-alt">'.$produit[0]->getNom().'</h4>
                   </div>
                 </div>';
               }
@@ -121,4 +81,5 @@
     </div>
   </form>
   </section>
+
 <?php require_once(PATH_VIEWS.'footer.php');?>
