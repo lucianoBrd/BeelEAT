@@ -28,7 +28,7 @@
             ?>
             <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown">Mon compte</a>
               <ul class="dropdown-menu">
-                <li><a href="">Informations</a></li>
+                <li><a href="?page=mesCommandes">Mes commandes</a></li>
                 <li><a href="?page=disconnection">Déconnection</a></li>
               </ul>
             </li>

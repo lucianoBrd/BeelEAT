@@ -13,6 +13,33 @@ class CommandeDAO extends DAO{
     else return null;
   }
 
+  public function getCommandeByUserId($userId){
+    require_once(PATH_MODELS.'ProduitDAO.php');
+    require_once(PATH_MODELS.'MenuDAO.php');
+    require_once(PATH_MODELS.'ListeProdCommDAO.php');
+    $menuDAO = new MenuDAO();
+    $produitDAO = new ProduitDAO();
+    $listeProdCommDAO = new ListeProdCommDAO();
+
+    $requete = "SELECT * FROM commande WHERE user_comm = ? ORDER BY id_comm DESC";
+    $donnees = array($userId);
+    $res = $this->queryAll($requete, $donnees);
+
+    if($res)
+    {
+      $commListe = array();
+      $i = 0;
+      foreach ($res as $commande) {
+        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
+        $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
+        $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+        $i++;
+      }
+      return $commListe;
+    }
+    else return null;
+  }
+
   public function newCommande($commande){
     $requete = "INSERT INTO commande(user_comm, prix_comm, statut_comm, menu_comm) VALUES (?, ?, ?, ?)";
     $donnees = array($commande->getUserComm(), $commande->getPrixComm(), $commande->getStatutComm(), $commande->getMenuComm());
