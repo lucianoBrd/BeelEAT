@@ -50,7 +50,37 @@ class CommandeDAO extends DAO{
     $listeProdCommDAO = new ListeProdCommDAO();
     $userDAO = new UserDAO();
 
-    $requete = "SELECT * FROM commande ORDER BY id_comm DESC";
+    $requete = "SELECT * FROM commande ORDER BY statut_comm ASC, id_comm DESC";
+    $donnees = array();
+    $res = $this->queryAll($requete, $donnees);
+
+    if($res)
+    {
+      $commListe = array();
+      $i = 0;
+      foreach ($res as $commande) {
+        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
+        $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
+        $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+        $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
+        $i++;
+      }
+      return $commListe;
+    }
+    else return null;
+  }
+
+  public function getCommandePrepa(){
+    require_once(PATH_MODELS.'ProduitDAO.php');
+    require_once(PATH_MODELS.'MenuDAO.php');
+    require_once(PATH_MODELS.'ListeProdCommDAO.php');
+    require_once(PATH_MODELS.'UserDAO.php');
+    $menuDAO = new MenuDAO();
+    $produitDAO = new ProduitDAO();
+    $listeProdCommDAO = new ListeProdCommDAO();
+    $userDAO = new UserDAO();
+
+    $requete = 'SELECT * FROM commande WHERE statut_comm="preparation" ORDER BY id_comm ASC';
     $donnees = array();
     $res = $this->queryAll($requete, $donnees);
 

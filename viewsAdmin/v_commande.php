@@ -16,7 +16,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Dashboard <small>accueil</small></h1>
+					<h1>Dashboard <small><?=$page?></small></h1>
 				</div>
 				<!-- END PAGE TITLE -->
 				<!-- BEGIN PAGE TOOLBAR -->
@@ -112,7 +112,18 @@
 										?>
 											<tr role="row" class="<?=$class?>">
 												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
-												<td class="sorting_1"><?=$commande[0]->getCommId()?></td>
+												<td class="sorting_1">
+                          <?=$commande[0]->getCommId()?>
+                          <h5><?=$commande[1]->getNom()?></h5>
+                          <?php
+                            if($commande[2] != null){
+                              foreach ($commande[2] as $prod) {
+                                echo '<h6>'.$prod[0]->getNom().'</h6>
+                                      <img class="img-responsive" src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
+                              }
+                            }
+                          ?>
+                        </td>
 												<td><?=$commande[0]->getDateComm()?></td>
 												<td><?=$commande[3]->getPseudo()?><br/><?=$commande[3]->getEmail()?></td>
 												<td><?=$commande[0]->getPrixComm()?></td>
@@ -141,7 +152,7 @@
 																</div>
 																<div class="modal-footer">
 																	<button class="btn default" data-dismiss="modal" aria-hidden="true">Fermer</button>
-																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>" class="btn blue">Confirmer</a>
+																	<a href="?page=changeStatut&before=commande&id=<?=$commande[0]->getCommId()?>" class="btn blue">Confirmer</a>
 																</div>
 															</div>
 														</div>
@@ -176,8 +187,6 @@ jQuery(document).ready(function() {
    Metronic.init(); // init metronic core componets
    Layout.init(); // init layout
    Demo.init(); // init demo features
-    Index.init(); // init index page
- Tasks.initDashboardWidget(); // init tash dashboard widget
 });
 </script>
 <!-- END JAVASCRIPTS -->

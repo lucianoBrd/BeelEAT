@@ -8,14 +8,19 @@
     if(isset($_GET['id'])){
       $id = htmlspecialchars($_GET['id']);
       $commande = $commandeDAO->getCommandeById($id);
+      if(isset($_GET['before'])){
+        $before = htmlspecialchars($_GET['before']);
+      } else {
+        $before = 'accueil';
+      }
       if($commande == null){
-        header('Location: ../?error=ERREUR');
+        header('Location: ../?error=ERREUR&page='.$before);
       } else {
         $update = $commandeDAO->updateStatutCommande($commande);
         if($update){
-          header('Location: ../');
+          header('Location: ../?page='.$before);
         } else {
-          header('Location: ../?error=ERREUR');
+          header('Location: ../?error=ERREUR$page='.$before);
         }
       }
     }

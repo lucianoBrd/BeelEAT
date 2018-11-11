@@ -16,7 +16,7 @@
         <span class="title">Dashboard</span>
         </a>
       </li>
-      <li class="<?=$page == 'products'|| $page == 'productsE'|| $page == 'ingredient'|| $page == 'ingredientE' || $page == 'menuB' || $page == 'menuE'? 'active open' : '' ?>">
+      <li class="<?=$page == 'commande'|| $page == 'products'|| $page == 'productsE'|| $page == 'ingredient'|| $page == 'ingredientE' || $page == 'menuB' || $page == 'menuE'? 'active open' : '' ?>">
         <a href="javascript:;">
         <i class="icon-basket"></i>
         <span class="title">Commerce</span>
@@ -28,8 +28,8 @@
             <i class="icon-home"></i>
             Dashboard</a>
           </li>
-          <li>
-            <a href="ecommerce_orders.php">
+          <li class="<?=$page == 'commande' ? 'active' : '' ?>">
+            <a href="?page=commande">
             <i class="icon-basket"></i>
             Commande</a>
           </li>
@@ -47,86 +47,6 @@
             <a href="?page=ingredient">
             <i class="icon-handbag"></i>
             Ingredient</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="javascript:;">
-        <i class="icon-settings"></i>
-        <span class="title">Form Stuff</span>
-        <span class="arrow "></span>
-        </a>
-        <ul class="sub-menu">
-          <li>
-            <a href="form_controls_md.html">
-            <span class="badge badge-roundless badge-danger">new</span>Material Design<br>
-            Form Controls</a>
-          </li>
-          <li>
-            <a href="form_controls.html">
-            Bootstrap<br>
-            Form Controls</a>
-          </li>
-          <li>
-            <a href="form_layouts.html">
-            Form Layouts</a>
-          </li>
-          <li>
-            <a href="form_editable.html">
-            <span class="badge badge-warning">new</span>Form X-editable</a>
-          </li>
-          <li>
-            <a href="form_wizard.html">
-            Form Wizard</a>
-          </li>
-          <li>
-            <a href="form_validation.html">
-            Form Validation</a>
-          </li>
-          <li>
-            <a href="form_image_crop.html">
-            <span class="badge badge-danger">new</span>Image Cropping</a>
-          </li>
-          <li>
-            <a href="form_fileupload.html">
-            Multiple File Upload</a>
-          </li>
-          <li>
-            <a href="form_dropzone.html">
-            Dropzone File Upload</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="javascript:;">
-        <i class="icon-user"></i>
-        <span class="title">Login Options</span>
-        <span class="arrow "></span>
-        </a>
-        <ul class="sub-menu">
-          <li>
-            <a href="login.html">
-            Login Form 1</a>
-          </li>
-          <li>
-            <a href="login_2.html">
-            Login Form 2</a>
-          </li>
-          <li>
-            <a href="login_3.html">
-            Login Form 3</a>
-          </li>
-          <li>
-            <a href="login_soft.html">
-            Login Form 4</a>
-          </li>
-          <li>
-            <a href="extra_lock.html">
-            Lock Screen 1</a>
-          </li>
-          <li>
-            <a href="extra_lock2.html">
-            Lock Screen 2</a>
           </li>
         </ul>
       </li>
