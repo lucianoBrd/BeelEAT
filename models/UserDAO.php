@@ -27,6 +27,18 @@ class UserDAO extends DAO{
     else return 0;
   }
 
+  public function getNbUserById($id){
+    $requete = "SELECT * FROM users WHERE id = ?";
+    $donnees = array($id);
+    $res = $this->queryRow($requete, $donnees);
+
+    if($res)
+    {
+      return new User($res['id'], $res['admin'], $res['pseudo'], $res['email'], $res['password'], $res['creation_date'], $res['key_secret']);
+    }
+    else return 0;
+  }
+
   public function getUserByEmail($email){
     $requete = "SELECT * FROM users WHERE email = ?";
     $donnees = array($email);

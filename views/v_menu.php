@@ -12,7 +12,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
               <ul class="dropdown-menu">
-                <li><a href="#commande">Commander</a></li>
+                <li><a href="?page=accueil#commande">Commander</a></li>
                 <?php
                   if(!isset($_SESSION['connect'])){
                 ?>
@@ -26,7 +26,7 @@
             <?php
               if(isset($_SESSION['connect'])){
             ?>
-            <li class="dropdown"><a class="dropdown-toggle" href="documentation.html" data-toggle="dropdown">Mon compte</a>
+            <li class="dropdown"><a class="dropdown-toggle" href="" data-toggle="dropdown">Mon compte</a>
               <ul class="dropdown-menu">
                 <li><a href="?page=mesCommandes">Mes commandes</a></li>
                 <li><a href="?page=disconnection">Déconnection</a></li>

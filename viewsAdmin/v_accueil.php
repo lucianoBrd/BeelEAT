@@ -37,56 +37,15 @@
 			</ul>
 			<!-- END PAGE BREADCRUMB -->
 			<!-- BEGIN PAGE CONTENT INNER -->
-
+			<?php require_once(PATH_VIEWS_ADMIN.'alertAdmin.php');?>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="note note-success note-shadow">
-						<p>
-							 NOTE:
-						</p>
-					</div>
 					<!-- Begin: life time stats -->
 					<div class="portlet light">
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="icon-basket font-green-sharp"></i>
 								<span class="caption-subject font-green-sharp bold uppercase">Commande</span>
-								<span class="caption-helper">en cours...</span>
-							</div>
-							<div class="actions">
-								<a href="javascript:;" class="btn btn-circle btn-default">
-								<i class="fa fa-plus"></i>
-								<span class="hidden-480">
-								New Order </span>
-								</a>
-								<div class="btn-group">
-									<a class="btn btn-default btn-circle" href="javascript:;" data-toggle="dropdown">
-									<i class="fa fa-share"></i>
-									<span class="hidden-480">
-									Tools </span>
-									<i class="fa fa-angle-down"></i>
-									</a>
-									<ul class="dropdown-menu pull-right">
-										<li>
-											<a href="javascript:;">
-											Export to Excel </a>
-										</li>
-										<li>
-											<a href="javascript:;">
-											Export to CSV </a>
-										</li>
-										<li>
-											<a href="javascript:;">
-											Export to XML </a>
-										</li>
-										<li class="divider">
-										</li>
-										<li>
-											<a href="javascript:;">
-											Print Invoices </a>
-										</li>
-									</ul>
-								</div>
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -110,84 +69,91 @@
 										<input type="checkbox" class="group-checkable">
 									</th>
 									<th width="5%">
-										 Order&nbsp;#
+										 Numero&nbsp;commande
 									</th>
 									<th width="15%">
-										 Purchased&nbsp;On
+										 Date&nbsp;commande
 									</th>
 									<th width="15%">
-										 Customer
+										 Client
 									</th>
 									<th width="10%">
-										 Ship&nbsp;To
+										 Prix
 									</th>
 									<th width="10%">
-										 Base&nbsp;Price
+										 Statut
 									</th>
-									<th width="10%">
-										 Purchased&nbsp;Price
-									</th>
-									<th width="10%">
-										 Status
-									</th>
-									<th width="10%">
+									<th width="20%">
 										 Actions
 									</th>
 								</tr>
-								<tr role="row" class="filter">
-									<td>
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="order_id">
-									</td>
-									<td>
-										<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										<div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="order_customer_name">
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="order_ship_to">
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<input type="text" class="form-control form-filter input-sm" name="order_base_price_from" placeholder="From"/>
-										</div>
-										<input type="text" class="form-control form-filter input-sm" name="order_base_price_to" placeholder="To"/>
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_purchase_price_from" placeholder="From"/>
-										</div>
-										<input type="text" class="form-control form-filter input-sm" name="order_purchase_price_to" placeholder="To"/>
-									</td>
-									<td>
-										<select name="order_status" class="form-control form-filter input-sm">
-											<option value="">Select...</option>
-											<option value="pending">Préparation</option>
-											<option value="closed">Terminer</option>
-										</select>
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Détails</button>
-										</div>
-										<button class="btn btn-sm red filter-cancel"><i class="fa fa-check"></i> Valider</button>
-									</td>
-								</tr>
 								</thead>
 								<tbody>
+									<?php
+										$compt = 0;
+										foreach ($listeComm as $commande){
+											if($compt%2 == 0){
+												$class = 'odd';
+											} else {
+												$class = 'even';
+											}
+											$type="danger";
+											switch($commande[0]->getStatutComm()){
+												case "preparation" : $change = "Changer Attente Recuperation";
+																						 break;
+												case "attente_recuperation" : $change = "Changer Termine";
+										 												 break;
+												case "termine" : $type = "success";
+																				 break;
+											}
+											if($commande[0]->getStatutComm() == "termine"){
+												$type="success";
+											}
+										?>
+											<tr role="row" class="<?=$class?>">
+												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
+												<td class="sorting_1"><?=$commande[0]->getCommId()?></td>
+												<td><?=$commande[0]->getDateComm()?></td>
+												<td><?=$commande[3]->getPseudo()?><br/><?=$commande[3]->getEmail()?></td>
+												<td><?=$commande[0]->getPrixComm()?></td>
+												<td><span class="label label-sm label-<?=$type?>"><?=$commande[0]->getStatutComm()?></span></td>
+												<td>
+													<div class="margin-bottom-5">
+														<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Détails</button>
+													</div>
+													<!-- Button to trigger modal -->
+													<?php
+														if(isset($change)){
+													?>
+													<a href="#myModal<?=$commande[0]->getCommId()?>" role="button" class="btn btn-sm red filter-cancel" data-toggle="modal"><i class="fa fa-check"></i><?=$change?></a>
+													<!-- Modal -->
+													<div id="myModal<?=$commande[0]->getCommId()?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+																	<h4 class="modal-title">Confirmer changement</h4>
+																</div>
+																<div class="modal-body">
+																	<p>
+																		 Changer le statut de la commande ?
+																	</p>
+																</div>
+																<div class="modal-footer">
+																	<button class="btn default" data-dismiss="modal" aria-hidden="true">Fermer</button>
+																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>" class="btn blue">Confirmer</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<?php
+														}
+													?>
+												</td>
+											</tr>
+									<?php
+										}
+									?>
 								</tbody>
 								</table>
 							</div>
