@@ -1,15 +1,13 @@
 <?php
 
 // Accès base de données
-/*const BD_HOST = 'emiliengzs321.mysql.db';
-const BD_DBNAME = 'emiliengzs321';
-const BD_USER = 'emiliengzs321';
-const BD_PWD = 'Capiitainecool01';*/
+const DEV = false;
 
-const BD_HOST = 'localhost';
-const BD_DBNAME = 'formation_members';
-const BD_USER = 'root';
-const BD_PWD = '';
+const BD_HOST = !DEV?'emiliengzsbeel.mysql.db' : 'localhost';
+const BD_DBNAME = !DEV?'emiliengzsbeel' : 'formation_members';
+const BD_USER = !DEV?'emiliengzsbeel' : 'root';
+const BD_PWD = !DEV?'Beeleat01' : '';
+const MAIL_LINK = !DEV?'https://lucien-brd.com/' : 'https://localhost/';
 
 // Langue du site
 const LANG ='FR-fr';
@@ -27,4 +25,5 @@ define('PATH_MODELS','./models/');
 define('PATH_VIEWS','./views/v_');
 define('PATH_VIEWS_ADMIN','./viewsAdmin/v_');
 define('PATH_TEXTES','./languages/');
+define('PATH_MAIL','./email/mailTest.php');
 define('link', './');

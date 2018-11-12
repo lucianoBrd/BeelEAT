@@ -37,7 +37,7 @@
 <link href="assetsAdmin/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="assetsAdmin/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<link rel="shortcut icon" href="assets/images/favicons/logo.png"/>
 </head>
 <!-- END HEAD -->
 <body class="page-md page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo">
