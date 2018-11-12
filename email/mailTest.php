@@ -80,7 +80,7 @@ function email($destinataire, $titre, $sousTitre, $description){
 								<!-- padding --><div style="height: 20px; line-height: 20px; font-size: 10px;">&nbsp;</div>
 								<table width="115" border="0" cellspacing="0" cellpadding="0" >
 									<tr><td align="left" valign="top" class="mob_center">
-										<a href="../" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
+										<a href="'.MAIL_LINK.'" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
 										<font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">
 										<img src="'.MAIL_LINK.'assets/images/favicons/logo.png" width="50" height="50" alt="BeelEAT" border="0" style="display: block;" /></font></a>
 									</td></tr>

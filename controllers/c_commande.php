@@ -31,7 +31,7 @@ if(!isset($_SESSION['connect'])){
       unset($_SESSION['prod']);
       unset($_SESSION['commande']);
       $user = $userDAO->getNbUserById($_SESSION['id']);
-      email($user->getEmail(), 'Confirmation de commande', 'Bonjour '.$user->getPseudo().',', 'Votre commande numéro '.$idComm.' est en préparation!');
+      email($user->getEmail(), 'Confirmation de commande', 'Bonjour '.$user->getPseudo().',', 'Votre commande numéro '.$idComm.' est en cours de préparation!');
       header('Location: ../?error=COMMANDE_TRUE#about');
     }
   }
