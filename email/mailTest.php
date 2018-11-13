@@ -1,6 +1,6 @@
 <?php
 
-function email($destinataire, $titre, $sousTitre, $description){
+function email($destinataire, $mailTitre, $titre, $sousTitre, $description){
 	$header="MIME-Version: 1.0\r\n";
 	$header.='From:"BeelEAT"<beeleat@lucien-brd.com>'."\n";
 	$header.='Content-Type:text/html; charset="uft-8"'."\n";
@@ -205,6 +205,6 @@ function email($destinataire, $titre, $sousTitre, $description){
 	</body>
 	</html>
 ';
-	mail($destinataire, "BeelEAT", $message, $header);
+	mail($destinataire, $mailTitre, $message, $header);
 }
 ?>
