@@ -141,7 +141,7 @@
 																</div>
 																<div class="modal-footer">
 																	<button class="btn default" data-dismiss="modal" aria-hidden="true">Fermer</button>
-																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>" class="btn blue">Confirmer</a>
+																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>&user=<?=$commande[3]->getId()?>" class="btn blue">Confirmer</a>
 																</div>
 															</div>
 														</div>

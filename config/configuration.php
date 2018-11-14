@@ -1,7 +1,7 @@
 <?php
 
 // Accès base de données
-const DEV = false;
+const DEV = FALSE;
 
 const BD_HOST = !DEV?'emiliengzsbeel.mysql.db' : 'localhost';
 const BD_DBNAME = !DEV?'emiliengzsbeel' : 'formation_members';
