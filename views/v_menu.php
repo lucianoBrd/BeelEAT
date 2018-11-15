@@ -12,8 +12,12 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
               <ul class="dropdown-menu">
+                <?php
+                  if(isset($_SESSION['connect'])){
+                ?>
                 <li><a href="?page=accueil#commande">Commander</a></li>
                 <?php
+                  }
                   if(!isset($_SESSION['connect'])){
                 ?>
                 <li><a href="?page=inscription">Inscription</a></li>
