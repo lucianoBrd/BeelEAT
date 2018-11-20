@@ -13,6 +13,10 @@ abstract class DAO
    return $this->_erreur;
   }
 
+  public function getLastID(){
+    return Connexion::getInstance()->getBdd()->lastInsertId();
+  }
+
   private function _requete($sql, $args = null)
   {
     if ($args == null)
