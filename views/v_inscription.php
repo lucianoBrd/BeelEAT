@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="video-player" data-property="{videoURL:'https://youtu.be/LvG2_aFvjVA', containment:'.module-video', startAt:0, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
+    <div class="video-player" data-property="{videoURL:'https://youtu.be/WCHk5rYsEsQ', containment:'.module-video', startAt:0, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
   </section>
   <section class="module">
     <div class="container">
