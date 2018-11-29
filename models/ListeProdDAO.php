@@ -9,7 +9,7 @@ class ListeProdDAO extends DAO{
   public function getListeProduitById($id){
     require_once('ImageDAO.php');
     $imageDAO = new ImageDAO();
-    $requete = 'SELECT * FROM liste_prod JOIN produit ON liste_prod.id_prod = produit.id_prod WHERE id_menu = ?';
+    $requete = 'SELECT * FROM liste_prod JOIN produit ON liste_prod.id_prod = produit.id_prod WHERE id_menu = ? and statut_prod != "indisponible"';
     $donnees = array($id);
     $res = $this->queryAll($requete, $donnees);
 

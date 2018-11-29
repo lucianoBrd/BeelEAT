@@ -100,5 +100,30 @@ class ProduitDAO extends DAO{
       return true;
     }
   }
+
+  public function decrementProduit($id){
+    $requete = "UPDATE produit SET stock_prod = stock_prod-1 WHERE id_prod = ?";
+    $donnees = array($id);
+    $res = $this->queryInsert($requete, $donnees);
+    $this->statutProduit($id);
+    if($res == false){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  public function statutProduit($id){
+    $donnees = array($id);
+    $produit = $this->getProduitByIDJoinImage($id);
+    if($produit[0]->getStock() == 1){
+      $requete = 'UPDATE produit SET statut_prod = "indisponible" WHERE id_prod = ?';
+      $res = $this->queryInsert($requete, $donnees);
+    }
+    if($produit[0]->getStock() < 5){
+      require_once(PATH_MAIL);
+      email('lucien.burdet@gmail.com', 'BeelEAT | Stock Bas', 'Alerte Stock Bas', 'Bonjour Admin,', 'Attention, plus que '.$produit[0]->getStock().' '.$produit[0]->getNom().' en stock.');
+    }
+  }
 }
 ?>
