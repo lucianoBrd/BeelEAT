@@ -18,6 +18,10 @@ function choixAlertAdmin($message)
       $alert['messageAlert'] = IMAGE;
       //$alert['classAlert'] = "success";
       break;
+    case 'SUCCESS' :
+      $alert['messageAlert'] = BRAVO;
+      $alert['classAlert'] = "success";
+      break;
     default :
       $alert['messageAlert'] = MESSAGE_ERREUR;
   }

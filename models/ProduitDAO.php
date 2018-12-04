@@ -101,6 +101,18 @@ class ProduitDAO extends DAO{
     }
   }
 
+  public function updateProduit($produit){
+    $requete = "UPDATE produit SET nom_prod = ?, stock_prod = ?, statut_prod = ?, type_prod = ?, prix_prod = ?
+                WHERE id_prod = ?";
+    $donnees = array($produit->getNom(), $produit->getStock(), $produit->getStatut(), $produit->getType(), $produit->getPrix(), $produit->getProdId());
+    $res = $this->queryInsert($requete, $donnees);
+    if($res == false){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   public function decrementProduit($id){
     $requete = "UPDATE produit SET stock_prod = stock_prod-1 WHERE id_prod = ?";
     $donnees = array($id);
@@ -116,7 +128,7 @@ class ProduitDAO extends DAO{
   public function statutProduit($id){
     $donnees = array($id);
     $produit = $this->getProduitByIDJoinImage($id);
-    if($produit[0]->getStock() == 1){
+    if($produit[0]->getStock() <= 1){
       $requete = 'UPDATE produit SET statut_prod = "indisponible" WHERE id_prod = ?';
       $res = $this->queryInsert($requete, $donnees);
     }

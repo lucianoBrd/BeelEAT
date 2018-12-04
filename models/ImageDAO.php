@@ -26,5 +26,18 @@ class ImageDAO extends DAO{
       return true;
     }
   }
+
+  public function dellImageByProdId($id){
+    $requete = "DELETE FROM image WHERE produit_id = ?";
+    $donnees = array($id);
+
+    unlink($this->getImageByProdId($id)->getLink());
+    $res = $this->queryInsert($requete, $donnees);
+    if($res == false){
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
 ?>
