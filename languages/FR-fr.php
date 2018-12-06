@@ -11,5 +11,7 @@ define('ERREUR', ' Authentification impossible.');
 define('COMMANDE', ' Votre commande à bien été passée, vous allez recevoir un email avec tous les détails.');
 define('MDP', ' Les mots de passe ne sont pas identiques.');
 define('MAIL', ' Adresse Email deja utilisée.');
-define('INSCRIPTION', ' Inscription prise en compte.');
+define('INSCRIPTION', ' Inscription prise en compte. Vous allez recevoir un email de confirmation.');
+define('ACTIVE', ' Votre compte est déjà activé.');
+define('ACTIVEOK', ' Votre compte à bien été activé.');
 define('ERREUR_COMM', ' Une erreur est survenue. <a href="../">Retour accueil</a>');

@@ -16,7 +16,11 @@ class User
 
   private $_key_secret;
 
-  public function __construct($id, $admin, $pseudo, $email, $password, $creation_date, $key_secret)
+  private $_keygen;
+
+  private $_active;
+
+  public function __construct($id, $admin, $pseudo, $email, $password, $creation_date, $key_secret, $keygen, $active)
   {
     $this->_id = $id;
     $this->_admin = $admin;
@@ -25,6 +29,8 @@ class User
     $this->_password = $password;
     $this->_creation_date = $creation_date;
     $this->_key_secret = $key_secret;
+    $this->_keygen = $keygen;
+    $this->_active = $active;
   }
 
   public function getId() {
@@ -81,5 +87,21 @@ class User
 
   public function setKeySecret($key_secret){
     $this->_key_secret = $key_secret;
+  }
+
+  public function getKeygen() {
+    return $this->_keygen;
+  }
+
+  public function setKeygen($keygen){
+    $this->_keygen = $keygen;
+  }
+
+  public function getActive() {
+    return $this->_active;
+  }
+
+  public function setActive($active){
+    $this->_active = $active;
   }
 }

@@ -32,16 +32,18 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
   $user = $userDAO->getUserByEmail($email);
 
   if($user != null && $password == $user->getPassword()){
-    $_SESSION['connect'] = 1;
-    $_SESSION['pseudo'] = $user->getPseudo();
-    $_SESSION['id'] = $user->getId();
-    $_SESSION['admin'] = $user->getAdmin();
-    $error = 0;
-    // Creer cookie
-    if(isset($_POST['check_connect'])){
-      setcookie('log', $user->getKeySecret(), time() + 365*24*3600, null, null, false, true);
+    if($user->getActive()){
+      $_SESSION['connect'] = 1;
+      $_SESSION['pseudo'] = $user->getPseudo();
+      $_SESSION['id'] = $user->getId();
+      $_SESSION['admin'] = $user->getAdmin();
+      $error = 0;
+      // Creer cookie
+      if(isset($_POST['check_connect'])){
+        setcookie('log', $user->getKeySecret(), time() + 365*24*3600, null, null, false, true);
+      }
+      header('location: ../');
     }
-    header('location: ../');
   }
   if($error == 1){
     header('location: ../?error=INCONNUE&email='.$email.'');

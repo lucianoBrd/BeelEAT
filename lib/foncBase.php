@@ -53,6 +53,14 @@ function choixAlert($message)
       $alert['messageAlert'] = COMMANDE;
       $alert['classAlert'] = "success";
       break;
+    case 'ACTIVE' :
+      $alert['messageAlert'] = ACTIVE;
+      $alert['classAlert'] = "success";
+      break;
+    case 'ACTIVEOK' :
+      $alert['messageAlert'] = ACTIVEOK;
+      $alert['classAlert'] = "success";
+      break;
     default :
       $alert['messageAlert'] = MESSAGE_ERREUR;
   }

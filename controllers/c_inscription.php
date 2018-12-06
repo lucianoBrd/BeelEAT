@@ -31,8 +31,11 @@ if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['passwor
     // Grain de sel : 1254
     $password = "aq1".sha1($password."1254")."25";
 
+    // Creer keygen
+    $keygen = sha1($pseudo).time().time();
+
     // Envoie de la requete
-    $user = new User(null, null, $pseudo, $email, $password, null, $secret);
+    $user = new User(null, null, $pseudo, $email, $password, null, $secret, $keygen, null);
     $insert = $userDAO->newUser($user);
     if($insert){
       header('location: ../?page=inscription&error=SUCCESS');
