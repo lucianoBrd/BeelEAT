@@ -38,19 +38,11 @@
 			<!-- END PAGE BREADCRUMB -->
 			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
-			<?php
-				if(isset($error)){
-					switch($error){
-						case 1: echo incomplet;
-										break;
-						case 2: echo imgIncorrect;
-										break;
-					}
-				}
-			?>
+			<?php require_once(PATH_VIEWS_ADMIN.'alertAdmin.php');?>
+
 			<div class="row">
 				<div class="col-md-12">
-					<form class="form-horizontal form-row-seperated" method="post" action="?page=ingredientE" enctype="multipart/form-data">
+					<form class="form-horizontal form-row-seperated" method="post" action="?page=ingredientE<?=isset($id)? '&id='.$id : ''?>" enctype="multipart/form-data">
 						<div class="portlet light">
 								<div class="portlet-title">
 									<div class="caption">
@@ -60,7 +52,7 @@
 										<span class="caption-helper">Man Tops</span>
 									</div>
 									<div class="actions btn-set">
-										<a href="ecommerce_ingredient.php" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>
+										<a href="?page=ingredient" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>
 										<button type="submit" class="btn green-haze btn-circle"><i class="fa fa-check"></i> Save</button>
 									</div>
 								</div>
@@ -80,7 +72,7 @@
 														* </span>
 														</label>
 														<div class="col-md-10">
-															<input type="text" class="form-control" name="nom" placeholder="">
+															<input type="text" class="form-control" name="nom" placeholder="" <?=isset($id)? 'value="'.$ingredient->getNom().'"' : ''?>>
 														</div>
 													</div>
 													<div class="form-group">
@@ -88,7 +80,7 @@
 														* </span>
 														</label>
 														<div class="col-md-10">
-															<input type="text" class="form-control" name="quantite" placeholder="">
+															<input type="text" class="form-control" name="quantite" placeholder="" <?=isset($id)? 'value="'.$ingredient->getStock().'"' : ''?>>
 														</div>
 													</div>
 
@@ -99,8 +91,8 @@
 														<div class="col-md-10">
 															<select class="table-group-action-input form-control input-medium" name="statut">
 																<option value="">Select...</option>
-																<option value="disponible">Disponible</option>
-																<option value="indisponible">Indisponible</option>
+																<option value="disponible" <?=isset($id) && $ingredient->getStatut()=="disponible"? 'selected' : ''?>>Disponible</option>
+																<option value="indisponible" <?=isset($id) && $ingredient->getStatut()=="indisponible"? 'selected' : ''?>>Indisponible</option>
 															</select>
 														</div>
 													</div>

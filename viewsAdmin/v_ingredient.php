@@ -141,24 +141,24 @@
 								<tbody>
 									<?php
 										$compt = 0;
-										while($produit = $req->fetch()){
+										foreach ($ingreListe as $ingredient){
 											if($compt%2 == 0){
 												$class = 'odd';
 											} else {
 												$class = 'even';
 											}
 											$type="success";
-											if($produit['statut_ingre'] == "indisponible"){
+											if($ingredient->getStatut() == "indisponible"){
 												$type="danger";
 											}
 											echo '<tr role="row" class="'.$class.'">
 												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
-												<td class="sorting_1">'.$produit['id_ingre'].'</td>
-												<td>'.$produit['nom_ingre'].'</td>
-												<td>'.$produit['stock_ingre'].'</td>
-												<td>'.$produit['date_ingre'].'</td>
-												<td><span class="label label-sm label-'.$type.'">'.$produit['statut_ingre'].'</span></td>
-												<td><a href="ecommerce_ingredient_edit.php?id='.$produit['id_ingre'].'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
+												<td class="sorting_1">'.$ingredient->getIngreId().'</td>
+												<td>'.$ingredient->getNom().'</td>
+												<td>'.$ingredient->getStock().'</td>
+												<td>'.$ingredient->getDate().'</td>
+												<td><span class="label label-sm label-'.$type.'">'.$ingredient->getStatut().'</span></td>
+												<td><a href="?page=ingredientE&id='.$ingredient->getIngreId().'" class="btn btn-xs default btn-editable"><i class="fa fa-pencil"></i> Editer</a></td>
 											</tr>';
 										}
 									?>
