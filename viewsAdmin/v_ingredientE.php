@@ -96,6 +96,20 @@
 															</select>
 														</div>
 													</div>
+
+													<div class="form-group">
+														<label class="col-md-2 control-label">Type: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<select class="table-group-action-input form-control input-medium" name="type">
+																<option value="">Select...</option>
+																<option value="sauce" <?=isset($id) && $ingredient->getType()=="sauce"? 'selected' : ''?>>Sauce</option>
+																<option value="garniture" <?=isset($id) && $ingredient->getType()=="garniture"? 'selected' : ''?>>Garniture</option>
+																<option value="viande" <?=isset($id) && $ingredient->getType()=="viande"? 'selected' : ''?>>Viande</option>
+															</select>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>

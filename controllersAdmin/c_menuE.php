@@ -92,6 +92,8 @@
 			}
 	  } else {
 			$id = htmlspecialchars($_GET['id']);
+      $menu = $menuDAO->getMenuJoinImageById($id);
+      $listeProd = $listeProdDAO->getListeProduitById($id);
 
 		}
 		if(isset($_GET['error'])){

@@ -2,14 +2,13 @@
 require_once(PATH_MODELS.'CommandeDAO.php');
 require_once(PATH_MODELS.'MenuDAO.php');
 require_once(PATH_MODELS.'ProduitDAO.php');
-require_once(PATH_MODELS.'ListeProdCommDAO.php');
-require_once(PATH_ENTITY.'ListeProdComm.php');
+require_once(PATH_MODELS.'IngredientDAO.php');
 require_once(PATH_ENTITY.'Commande.php');
 require_once(PATH_ENTITY.'Produit.php');
 $commandeDAO = new CommandeDAO();
 $menuDAO = new MenuDAO();
 $produitDAO = new ProduitDAO();
-$listeProdCommDAO = new ListeProdCommDAO();
+$ingredientDAO = new IngredientDAO();
 
 if(!isset($_SESSION['connect'])){
   header('location: ../');
@@ -24,6 +23,12 @@ if(!isset($_SESSION['connect'])){
       if(isset($_SESSION['prod'])){
         foreach ($_SESSION['prod'] as $prod)  {
           $listeProd[] = $produitDAO->getProduitByIDJoinImage($prod);
+        }
+      }
+      $listeIngre = array();
+      if(isset($_SESSION['ingre'])){
+        foreach ($_SESSION['ingre'] as $ingre)  {
+          $listeIngre[] = $ingredientDAO->getIngredientByID($ingre);
         }
       }
     }

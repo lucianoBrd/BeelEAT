@@ -57,6 +57,26 @@ class MenuDAO extends DAO{
     else return null;
   }
 
+  public function getMenuJoinImageById($id){
+    $requete = 'SELECT * FROM menu LEFT JOIN image ON image.produit_id = id_menu WHERE id_menu = ?';
+    $donnees = array($id);
+    $res = $this->queryRow($requete, $donnees);
+
+    if($res)
+    {
+      $menuImgListe = array();
+        $menuImgListe[0] = new Menu($res['id_menu'], $res['nom_menu'], $res['date_menu'], $res['statut_menu'], $res['prix_menu']);
+        if($res['link'] == null){
+          $linkImg = 'assets/images/section-1.jpg';
+        } else {
+          $linkImg = $res['link'];
+        }
+        $menuImgListe[1] = new Image(null, null, $res['nom_menu'], $linkImg, null);
+      return $menuImgListe;
+    }
+    else return null;
+  }
+
   public function getLastMenuID(){
     $requete = "SELECT * FROM menu WHERE id_menu=(SELECT MAX(id_menu) FROM menu)";
     $donnees = array();

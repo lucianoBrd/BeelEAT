@@ -13,7 +13,7 @@ class IngredientDAO extends DAO{
       $ingreListe = array();
       $i = 0;
       foreach ($res as $ingredient) {
-        $ingreListe[$i] = new Ingredient($ingredient['id_ingre'], $ingredient['nom_ingre'], $ingredient['stock_ingre'], $ingredient['date_ingre'], $ingredient['statut_ingre']);
+        $ingreListe[$i] = new Ingredient($ingredient['id_ingre'], $ingredient['nom_ingre'], $ingredient['stock_ingre'], $ingredient['date_ingre'], $ingredient['statut_ingre'], $ingredient['type_ingre']);
         $i++;
       }
       return $ingreListe;
@@ -28,7 +28,7 @@ class IngredientDAO extends DAO{
 
     if($res)
     {
-      return new Ingredient($res['id_ingre'], $res['nom_ingre'], $res['stock_ingre'], $res['date_ingre'], $res['statut_ingre']);
+      return new Ingredient($res['id_ingre'], $res['nom_ingre'], $res['stock_ingre'], $res['date_ingre'], $res['statut_ingre'], $res['type_ingre']);
     }
     else return null;
   }
@@ -43,10 +43,10 @@ class IngredientDAO extends DAO{
       $ingreListe = array();
       $i = 0;
       foreach ($res as $ingredient) {
-        $ingreListe[$i] = new Ingredient($ingredient['id_ingre'], $ingredient['nom_ingre'], $ingredient['stock_ingre'], $ingredient['date_ingre'], $ingredient['statut_ingre']);
+        $ingreListe[$i] = new Ingredient($ingredient['id_ingre'], $ingredient['nom_ingre'], $ingredient['stock_ingre'], $ingredient['date_ingre'], $ingredient['statut_ingre'], $ingredient['type_ingre']);
         $i++;
       }
-      return $prodListe;
+      return $ingreListe;
     }
     else return null;
   }
@@ -62,9 +62,9 @@ class IngredientDAO extends DAO{
   }
 
   public function newIngredient($ingredient){
-    $requete = "INSERT INTO ingredient(nom_ingre, stock_ingre, statut_ingre)
-                VALUES (?, ?, ?)";
-    $donnees = array($ingredient->getNom(), $ingredient->getStock(), $ingredient->getStatut());
+    $requete = "INSERT INTO ingredient(nom_ingre, stock_ingre, statut_ingre, type_ingre)
+                VALUES (?, ?, ?, ?)";
+    $donnees = array($ingredient->getNom(), $ingredient->getStock(), $ingredient->getStatut(), $ingredient->getType());
     $res = $this->queryInsert($requete, $donnees);
     if($res == false){
       return false;
@@ -74,9 +74,9 @@ class IngredientDAO extends DAO{
   }
 
   public function updateIngredient($ingredient){
-    $requete = "UPDATE ingredient SET nom_ingre = ?, stock_ingre = ?, statut_ingre = ?
+    $requete = "UPDATE ingredient SET nom_ingre = ?, stock_ingre = ?, statut_ingre = ?, type_ingre = ?
                 WHERE id_ingre = ?";
-    $donnees = array($ingredient->getNom(), $ingredient->getStock(), $ingredient->getStatut(), $ingredient->getIngreId());
+    $donnees = array($ingredient->getNom(), $ingredient->getStock(), $ingredient->getStatut(), $ingredient->getType(), $ingredient->getIngreId());
     $res = $this->queryInsert($requete, $donnees);
     if($res == false){
       return false;

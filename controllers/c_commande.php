@@ -31,7 +31,13 @@ if(!isset($_SESSION['connect'])){
         $listeProdCommDAO->newListeProdComm($listeProdComm);
         $produitDAO->decrementProduit($prod);
       }
+      foreach ($_SESSION['ingre'] as $ingre) {
+        $listeIngreComm = new ListeIngreComm(null, $ingre, $idComm);
+        $listeIngreCommDAO->newListeIngreComm($listeIngreComm);
+        $produitDAO->decrementIngredient($ingre);
+      }
       unset($_SESSION['prod']);
+      unset($_SESSION['ingre']);
       unset($_SESSION['commande']);
       $user = $userDAO->getNbUserById($_SESSION['id']);
       email($user->getEmail(), 'BeelEAT | Confirmation de commande', 'Confirmation de commande', 'Bonjour '.$user->getPseudo().',', 'Votre commande numéro '.$idComm.' est en cours de préparation.');

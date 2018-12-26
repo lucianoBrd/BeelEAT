@@ -34,6 +34,14 @@
                     foreach ($listeProd as $prod) {
                       echo '<h6>'.$prod[0]->getNom().'</h6>
                             <img src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
+                      if($prod[0]->getType() == "sandwich"){
+                        echo '<ul>';
+                        foreach ($listeIngre as $ingre) {
+                          echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+
+                        }
+                        echo '</ul>';
+                      }
                     }
                   ?>
                 </td>

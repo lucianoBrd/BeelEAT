@@ -123,6 +123,70 @@
 															</select>
 														</div>
 													</div>
+
+													<div class="form-group">
+														<label class="col-md-2 control-label">Ingredient: <span class="required">
+														* </span>
+														</label>
+														<div class="col-md-10">
+															<div class="form-control height-auto">
+																<div class="scroller" style="height:275px;" data-always-visible="1">
+																	<ul class="list-unstyled">
+																		<li>
+																			<label>Sauce</label>
+																			<ul class="list-unstyled">
+																				<?php
+																					foreach($ingreListe as $ingredient){
+																						if($ingredient->getType() == 'sauce'){
+																				?>
+																				<li>
+																					<label><?='<input type="checkbox" name="'.$ingredient->getNom().'" value="'.$ingredient->getIngreId().'">'.$ingredient->getNom()?></label>
+																				</li>
+																				<?php
+																					}
+																				}
+																				?>
+																			</ul>
+																		</li>
+																		<li>
+																			<label>Garniture</label>
+																			<ul class="list-unstyled">
+																				<?php
+																					foreach($ingreListe as $ingredient){
+																						if($ingredient->getType() == 'garniture'){
+																				?>
+																				<li>
+																					<label><?='<input type="checkbox" name="'.$ingredient->getNom().'" value="'.$ingredient->getIngreId().'">'.$ingredient->getNom()?></label>
+																				</li>
+																				<?php
+																					}
+																				}
+																				?>
+																			</ul>
+																		</li>
+																		<li>
+																			<label>Viande</label>
+																			<ul class="list-unstyled">
+																				<?php
+																					foreach($ingreListe as $ingredient){
+																						if($ingredient->getType() == 'viande'){
+																				?>
+																				<li>
+																					<label><?='<input type="checkbox" name="'.$ingredient->getNom().'" value="'.$ingredient->getIngreId().'">'.$ingredient->getNom()?></label>
+																				</li>
+																				<?php
+																					}
+																				}
+																				?>
+																			</ul>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<span class="help-block">
+															selectionner au moins un produit </span>
+														</div>
+													</div>
 												</div>
 											</div>
 											<div class="tab-pane" id="tab_images">

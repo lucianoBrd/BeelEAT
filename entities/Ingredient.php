@@ -12,13 +12,16 @@ class Ingredient
 
   private $_statut_ingre;
 
-  public function __construct($id_ingre, $nom_ingre, $stock_ingre, $date_ingre, $statut_ingre)
+  private $_type_ingre;
+
+  public function __construct($id_ingre, $nom_ingre, $stock_ingre, $date_ingre, $statut_ingre, $type_ingre)
   {
     $this->_id_ingre = $id_ingre;
     $this->_nom_ingre = strtolower($nom_ingre);
     $this->_stock_ingre = $stock_ingre;
     $this->_date_ingre = $date_ingre;
     $this->_statut_ingre = strtolower($statut_ingre);
+    $this->_type_ingre = strtolower($type_ingre);
   }
 
   public function getIngreId() {
@@ -59,5 +62,13 @@ class Ingredient
 
   public function setStatut($statut_ingre){
     $this->_statut_ingre = strtolower($statut_ingre);
+  }
+
+  public function getType() {
+    return $this->_type_ingre;
+  }
+
+  public function setType($type_ingre){
+    $this->_type_ingre = strtolower($type_ingre);
   }
 }

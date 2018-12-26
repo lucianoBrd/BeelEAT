@@ -8,15 +8,16 @@
     $ingredientDAO = new IngredientDAO();
 
     if(!isset($_GET['id'])){
-			if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut'])){
-				if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut'])){
+			if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut']) && isset($_POST['type'])){
+				if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut']) && !empty($_POST['type'])){
 
 					$error = false;
 			    $nom 			= htmlspecialchars($_POST['nom']);
 					$quantite = htmlspecialchars($_POST['quantite']);
 					$statut 	= htmlspecialchars($_POST['statut']);
+          $type 	= htmlspecialchars($_POST['type']);
 
-          $ingredient = new Ingredient(null, $nom, $quantite, null, $statut);
+          $ingredient = new Ingredient(null, $nom, $quantite, null, $statut, $type);
           $insert = $ingredientDAO->newIngredient($ingredient);
           if($insert == false){
             $error = 'INSERT';
@@ -37,15 +38,16 @@
 			if($ingredient == null){
 				header('Location: ?page='.$page.'&error=ID');
 			} else {
-        if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut'])){
-  				if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut'])){
+        if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut']) && isset($_POST['type'])){
+  				if(!empty($_POST['nom']) && !empty($_POST['quantite']) && !empty($_POST['statut']) && !empty($_POST['type'])){
 
   					$error = false;
   			    $nom 			= htmlspecialchars($_POST['nom']);
   					$quantite = htmlspecialchars($_POST['quantite']);
   					$statut 	= htmlspecialchars($_POST['statut']);
+            $type 	= htmlspecialchars($_POST['type']);
 
-            $ingredient = new Ingredient($id, $nom, $quantite, null, $statut);
+            $ingredient = new Ingredient($id, $nom, $quantite, null, $statut, $type);
             $insert = $ingredientDAO->updateIngredient($ingredient);
 
             if($insert){

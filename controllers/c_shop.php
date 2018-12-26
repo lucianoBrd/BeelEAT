@@ -1,7 +1,9 @@
 <?php
 require_once(PATH_MODELS.'ListeProdDAO.php');
+require_once(PATH_MODELS.'ListeIngreDAO.php');
 require_once(PATH_MODELS.'MenuDAO.php');
 $listeProdDAO = new ListeProdDAO();
+$listeIngreDAO = new ListeIngreDAO();
 $menuDAO = new MenuDAO();
 
 if(!isset($_SESSION['connect'])){
@@ -10,6 +12,7 @@ if(!isset($_SESSION['connect'])){
   if(isset($_GET['id'])){
     $id = htmlspecialchars($_GET['id']);
     $prodListe = $listeProdDAO->getListeProduitById($id);
+    
     if($prodListe == null){
       header('Location: ../?page=shop&error=ERREUR');
     }

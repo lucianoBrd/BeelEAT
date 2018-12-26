@@ -76,7 +76,7 @@
 														* </span>
 														</label>
 														<div class="col-md-10">
-															<input type="text" class="form-control" name="nom" placeholder="" <?=isset($id)? 'value="'.$pNom.'"' : ''?>>
+															<input type="text" class="form-control" name="nom" placeholder="" <?=isset($id)? 'value="'.$menu[0]->getNom().'"' : ''?>>
 														</div>
 													</div>
 													<div class="form-group">
@@ -84,7 +84,7 @@
 														* </span>
 														</label>
 														<div class="col-md-10">
-															<input type="text" class="form-control" name="prix" placeholder="" <?=isset($id)? 'value="'.$pPrix.'"' : ''?>>
+															<input type="text" class="form-control" name="prix" placeholder="" <?=isset($id)? 'value="'.$menu[0]->getPrix().'"' : ''?>>
 														</div>
 													</div>
 
@@ -95,9 +95,9 @@
 														<div class="col-md-10">
 															<select class="table-group-action-input form-control input-medium" name="statut">
 																<option value="">Select...</option>
-																<option value="disponible" <?=isset($id) && $pStatut=="disponible"? 'selected' : ''?>>Disponible</option>
-																<option value="publie" <?=isset($id) && $pStatut=="publie"? 'selected' : ''?>>Publié</option>
-																<option value="indisponible" <?=isset($id) && $pStatut=="indisponible"? 'selected' : ''?>>Indisponible</option>
+																<option value="disponible" <?=isset($id) && $menu[0]->getStatut()=="disponible"? 'selected' : ''?>>Disponible</option>
+																<option value="publie" <?=isset($id) && $menu[0]->getStatut()=="publie"? 'selected' : ''?>>Publié</option>
+																<option value="indisponible" <?=isset($id) && $menu[0]->getStatut()=="indisponible"? 'selected' : ''?>>Indisponible</option>
 															</select>
 														</div>
 													</div>

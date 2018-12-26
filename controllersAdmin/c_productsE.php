@@ -3,12 +3,17 @@
   if(!isset($_SESSION['connect'])){
     header('location: '.link);
   } elseif($_SESSION['admin'] == true) {
+    require_once(PATH_MODELS.'IngredientDAO.php');
     require_once(PATH_MODELS.'ProduitDAO.php');
     require_once(PATH_MODELS.'ImageDAO.php');
+    require_once(PATH_MODELS.'ListeIngreDAO.php');
     require_once(PATH_ENTITY.'Produit.php');
     require_once(PATH_ENTITY.'Image.php');
     $produitDAO = new ProduitDAO();
+    $ingredientDAO = new IngredientDAO();
     $imageDAO = new ImageDAO();
+    $listeIngreDAO = new ListeIngreDAO();
+    $ingreListe = $ingredientDAO->getIngredientDispo();
 
     if(!isset($_GET['id'])){
 			if(isset($_POST['nom']) && isset($_POST['quantite']) && isset($_POST['statut']) && isset($_POST['type']) && isset($_POST['prix'])){
@@ -20,6 +25,13 @@
 					$statut 	= htmlspecialchars($_POST['statut']);
 					$type 	= htmlspecialchars($_POST['type']);
 					$prix 	= htmlspecialchars($_POST['prix']);
+
+          $prodListe = array();
+          foreach ( $_POST as $post => $val )  {
+            if($post != 'nom' && $post != 'quantite' && $post != 'statut' && $post != 'type' && $post != 'prix' ){
+              $prodListe[] = $val;
+            }
+          }
 
           if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
 
@@ -40,6 +52,7 @@
                 if($insert == false){
                   $error = 'INSERT';
                 } else {
+                  $listeIngreDAO->newListeIngre($prodListe);
                   $idProd = $produitDAO->getLastProduitID();
                   $image = new Image($img_taille, $extentionImage, $img_nom, $link, $idProd);
         					$insert = $imageDAO->newImage($image);
@@ -59,6 +72,8 @@
             $insert = $produitDAO->newProduit($produit);
             if($insert == false){
               $error = 'INSERT';
+            } else {
+              $listeIngreDAO->newListeIngre($prodListe);
             }
           }
 					if($error == false){
@@ -73,6 +88,7 @@
 	  } else {
 			$id = htmlspecialchars($_GET['id']);
 			$prodImg = $produitDAO->getProduitByIDJoinImage($id);
+      $listeIngre = $listeIngreDAO->getListeIngredientById($id);
 			if($prodImg == null){
 				header('Location: ?page='.$page.'&error=ID');
 			} else {
@@ -102,7 +118,7 @@
   								$name 			= time().rand().rand().'.'.$extentionImage;
   				        $link  = 'assetsAdmin/global/img/upload/'.$name;
   				        move_uploaded_file($_FILES['image']['tmp_name'], $link);
-                  
+
                   $imageDAO->dellImageByProdId($id);
                   $image = new Image($img_taille, $extentionImage, $img_nom, $link, $id);
         					$imageDAO->newImage($image);
