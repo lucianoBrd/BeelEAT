@@ -1,14 +1,19 @@
 <?php
 require_once(PATH_MODELS.'CommandeDAO.php');
+require_once(PATH_MODELS.'IngredientDAO.php');
 require_once(PATH_MODELS.'ListeProdCommDAO.php');
+require_once(PATH_MODELS.'ListeIngreCommDAO.php');
 require_once(PATH_MODELS.'MenuDAO.php');
 require_once(PATH_MODELS.'UserDAO.php');
 require_once(PATH_MODELS.'ProduitDAO.php');
 require_once(PATH_ENTITY.'ListeProdComm.php');
 require_once(PATH_ENTITY.'Commande.php');
+require_once(PATH_ENTITY.'ListeIngreComm.php');
 require_once(PATH_MAIL);
 $commandeDAO = new CommandeDAO();
+$ingredientDAO = new IngredientDAO();
 $listeProdCommDAO = new ListeProdCommDAO();
+$listeIngreCommDAO = new ListeIngreCommDAO();
 $menuDAO = new MenuDAO();
 $userDAO = new UserDAO();
 $produitDAO = new ProduitDAO();
@@ -32,9 +37,9 @@ if(!isset($_SESSION['connect'])){
         $produitDAO->decrementProduit($prod);
       }
       foreach ($_SESSION['ingre'] as $ingre) {
-        $listeIngreComm = new ListeIngreComm(null, $ingre, $idComm);
+        $listeIngreComm = new ListeIngreComm(null, $idComm, $ingre);
         $listeIngreCommDAO->newListeIngreComm($listeIngreComm);
-        $produitDAO->decrementIngredient($ingre);
+        $ingredientDAO->decrementIngredient($ingre);
       }
       unset($_SESSION['prod']);
       unset($_SESSION['ingre']);
