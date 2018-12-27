@@ -31,7 +31,15 @@ class ImageDAO extends DAO{
     $requete = "DELETE FROM image WHERE produit_id = ?";
     $donnees = array($id);
 
-    unlink($this->getImageByProdId($id)->getLink());
+    $image = $this->getImageByProdId($id);
+    if($image){
+      $link = $image->getLink();
+      if($link != null){
+        unlink($link);
+      }
+    }
+
+
     $res = $this->queryInsert($requete, $donnees);
     if($res == false){
       return false;

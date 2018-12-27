@@ -17,9 +17,11 @@ class CommandeDAO extends DAO{
     require_once(PATH_MODELS.'ProduitDAO.php');
     require_once(PATH_MODELS.'MenuDAO.php');
     require_once(PATH_MODELS.'ListeProdCommDAO.php');
+    require_once(PATH_MODELS.'ListeIngreCommDAO.php');
     $menuDAO = new MenuDAO();
     $produitDAO = new ProduitDAO();
     $listeProdCommDAO = new ListeProdCommDAO();
+    $listeIngreCommDAO = new ListeIngreCommDAO();
 
     $requete = "SELECT * FROM commande WHERE user_comm = ? ORDER BY id_comm DESC";
     $donnees = array($userId);
@@ -33,6 +35,7 @@ class CommandeDAO extends DAO{
         $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
         $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
         $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+        $commListe[$i][3] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
         $i++;
       }
       return $commListe;
@@ -45,10 +48,12 @@ class CommandeDAO extends DAO{
     require_once(PATH_MODELS.'MenuDAO.php');
     require_once(PATH_MODELS.'ListeProdCommDAO.php');
     require_once(PATH_MODELS.'UserDAO.php');
+    require_once(PATH_MODELS.'ListeIngreCommDAO.php');
     $menuDAO = new MenuDAO();
     $produitDAO = new ProduitDAO();
     $listeProdCommDAO = new ListeProdCommDAO();
     $userDAO = new UserDAO();
+    $listeIngreCommDAO = new ListeIngreCommDAO();
 
     $requete = "SELECT * FROM commande ORDER BY statut_comm ASC, id_comm DESC";
     $donnees = array();
@@ -63,6 +68,7 @@ class CommandeDAO extends DAO{
         $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
         $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
         $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
+        $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
         $i++;
       }
       return $commListe;
@@ -75,10 +81,12 @@ class CommandeDAO extends DAO{
     require_once(PATH_MODELS.'MenuDAO.php');
     require_once(PATH_MODELS.'ListeProdCommDAO.php');
     require_once(PATH_MODELS.'UserDAO.php');
+    require_once(PATH_MODELS.'ListeIngreCommDAO.php');
     $menuDAO = new MenuDAO();
     $produitDAO = new ProduitDAO();
     $listeProdCommDAO = new ListeProdCommDAO();
     $userDAO = new UserDAO();
+    $listeIngreCommDAO = new ListeIngreCommDAO();
 
     $requete = 'SELECT * FROM commande WHERE statut_comm="preparation" ORDER BY id_comm ASC';
     $donnees = array();
@@ -93,6 +101,7 @@ class CommandeDAO extends DAO{
         $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
         $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
         $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
+        $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
         $i++;
       }
       return $commListe;
