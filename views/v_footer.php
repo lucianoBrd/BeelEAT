@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
-				<p class="copyright font-alt">&copy; 2017&nbsp;<a href="../">Beel EAT</a>, All Rights Reserved</p>
+				<p class="copyright font-alt">&copy; <?= date('Y') ?>&nbsp;<a href="../">Beel EAT</a>, All Rights Reserved</p>
 			</div>
 		</div>
 		</div>
