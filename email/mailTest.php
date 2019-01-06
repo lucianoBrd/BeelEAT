@@ -184,7 +184,7 @@ function email($destinataire, $mailTitre, $titre, $sousTitre, $description){
 				<tr><td align="center">
 					<font face="Arial, Helvetica, sans-serif" size="3" color="#96a5b5" style="font-size: 13px;">
 					<span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #96a5b5;">
-						2018 &copy; BeelEAT.
+						'.date('Y').' &copy; BeelEAT.
 					</span></font>
 				</td></tr>
 			</table>

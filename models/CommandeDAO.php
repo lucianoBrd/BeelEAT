@@ -32,10 +32,15 @@ class CommandeDAO extends DAO{
       $commListe = array();
       $i = 0;
       foreach ($res as $commande) {
-        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
-        $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
-        $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
-        $commListe[$i][3] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm'], $commande['prod_comm']);
+        if($commande['prod_comm'] == null){
+          $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
+          $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+          $commListe[$i][3] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        } else {
+          $commListe[$i][1] = $produitDAO->getProduitByIDJoinImage($commande['prod_comm']);
+          $commListe[$i][2] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        }
         $i++;
       }
       return $commListe;
@@ -64,11 +69,17 @@ class CommandeDAO extends DAO{
       $commListe = array();
       $i = 0;
       foreach ($res as $commande) {
-        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
-        $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
-        $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
-        $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
-        $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm'], $commande['prod_comm']);
+        if($commande['prod_comm'] == null){
+          $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
+          $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+          $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
+          $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        } else {
+          $commListe[$i][1] = $produitDAO->getProduitByIDJoinImage($commande['prod_comm']);
+          $commListe[$i][2] = $userDAO->getNbUserById($commande['user_comm']);
+          $commListe[$i][3] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        }
         $i++;
       }
       return $commListe;
@@ -97,11 +108,17 @@ class CommandeDAO extends DAO{
       $commListe = array();
       $i = 0;
       foreach ($res as $commande) {
-        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm']);
-        $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
-        $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
-        $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
-        $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        $commListe[$i][0] = new Commande($commande['id_comm'], $commande['date_comm'], $commande['user_comm'], $commande['prix_comm'], $commande['statut_comm'], $commande['menu_comm'], $commande['prod_comm']);
+        if($commande['prod_comm'] == null){
+          $commListe[$i][1] = $menuDAO->getMenuById($commande['menu_comm']);
+          $commListe[$i][2] = $listeProdCommDAO->getListeProdCommByIdComm($commande['id_comm']);
+          $commListe[$i][3] = $userDAO->getNbUserById($commande['user_comm']);
+          $commListe[$i][4] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        } else {
+          $commListe[$i][1] = $produitDAO->getProduitByIDJoinImage($commande['prod_comm']);
+          $commListe[$i][2] = $userDAO->getNbUserById($commande['user_comm']);
+          $commListe[$i][3] = $listeIngreCommDAO->getListeIngredientById($commande['id_comm']);
+        }
         $i++;
       }
       return $commListe;
@@ -116,7 +133,7 @@ class CommandeDAO extends DAO{
 
     if($res)
     {
-      return new Commande($res['id_comm'], $res['date_comm'], $res['user_comm'], $res['prix_comm'], $res['statut_comm'], $res['menu_comm']);
+      return new Commande($res['id_comm'], $res['date_comm'], $res['user_comm'], $res['prix_comm'], $res['statut_comm'], $res['menu_comm'], $res['prod_comm']);
     }
     else return null;
   }
@@ -138,8 +155,8 @@ class CommandeDAO extends DAO{
   }
 
   public function newCommande($commande){
-    $requete = "INSERT INTO commande(user_comm, prix_comm, statut_comm, menu_comm) VALUES (?, ?, ?, ?)";
-    $donnees = array($commande->getUserComm(), $commande->getPrixComm(), $commande->getStatutComm(), $commande->getMenuComm());
+    $requete = "INSERT INTO commande(user_comm, prix_comm, statut_comm, menu_comm, prod_comm) VALUES (?, ?, ?, ?, ?)";
+    $donnees = array($commande->getUserComm(), $commande->getPrixComm(), $commande->getStatutComm(), $commande->getMenuComm(), $commande->getProdComm());
     $res = $this->queryInsert($requete, $donnees);
     if($res == false){
       return false;

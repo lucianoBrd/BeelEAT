@@ -55,20 +55,24 @@
     </div>
     <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
       <?php
-        foreach($produitImgListe as $produit){
-          echo '<li class="work-item '.$produit[0]->getType().'"><a href="shop_checkout.html">
-              <div class="work-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/></div>
-              <div class="work-caption font-alt">
-                <h3 class="work-title">'.$produit[0]->getNom().'</h3>
-                <div class="work-descr">'.$produit[0]->getType().'</div>
-              </div></a></li>';
-        }
         foreach($menuImgListe as $menu){
           echo '<li class="work-item menu"><a href="?page=shop&id='.$menu[0]->getMenuId().'">
               <div class="work-image"><img src="'.$menu[1]->getLink().'" alt="'.$menu[1]->getName().'"/></div>
               <div class="work-caption font-alt">
                 <h3 class="work-title">'.$menu[0]->getNom().'</h3>
                 <div class="work-descr">Menu</div>
+              </div></a></li>';
+        }
+        foreach($produitImgListe as $produit){
+          $href = '?page=checkout&id='.$produit[0]->getProdId();
+          if($produit[0]->getType() == "sandwich"){
+            $href = '?page=shop&prod='.$produit[0]->getProdId();
+          }
+          echo '<li class="work-item '.$produit[0]->getType().'"><a href="'.$href.'">
+              <div class="work-image"><img src="'.$produit[1]->getLink().'" alt="'.$produit[1]->getName().'"/></div>
+              <div class="work-caption font-alt">
+                <h3 class="work-title">'.$produit[0]->getNom().'</h3>
+                <div class="work-descr">'.$produit[0]->getType().'</div>
               </div></a></li>';
         }
       ?>

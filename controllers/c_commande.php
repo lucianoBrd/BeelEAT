@@ -21,25 +21,40 @@ $produitDAO = new ProduitDAO();
 if(!isset($_SESSION['connect'])){
   header('location: ../');
 } elseif($_SESSION['admin'] == false) {
-  if(isset($_SESSION['commande'])){
-    $menu = $menuDAO->getMenuById($_SESSION['commande']);
+  if(isset($_SESSION['commande']) || isset($_GET['prod'])){
+    if(isset($_SESSION['commande'])){
+      $menu = $menuDAO->getMenuById($_SESSION['commande']);
 
-    $commande = new Commande(null, null, $_SESSION['id'], $menu->getPrix(), 'preparation', $_SESSION['commande']);
+      $commande = new Commande(null, null, $_SESSION['id'], $menu->getPrix(), 'preparation', $_SESSION['commande'], null);
+    } else {
+      $produit = $produitDAO->getProduitByIDJoinImage($_GET['prod']);
+
+      $commande = new Commande(null, null, $_SESSION['id'], $produit[0]->getPrix(), 'preparation', null, $_GET['prod']);
+    }
+
     $insert = $commandeDAO->newCommande($commande);
 
     if($insert == false){
       header('Location: ../?page=checkout&id='.$_SESSION['commande'].'error=COMMANDE_FALSE');
     } else {
       $idComm = $commandeDAO->getLastCommandeID();
-      foreach ($_SESSION['prod'] as $prod) {
-        $listeProdComm = new ListeProdComm(null, $prod, $idComm);
-        $listeProdCommDAO->newListeProdComm($listeProdComm);
-        $produitDAO->decrementProduit($prod);
+      if(isset($_SESSION['prod'])){
+        foreach ($_SESSION['prod'] as $prod) {
+          if($prod != -1){
+            $listeProdComm = new ListeProdComm(null, $prod, $idComm);
+            $listeProdCommDAO->newListeProdComm($listeProdComm);
+            $produitDAO->decrementProduit($prod);
+          }
+        }
       }
-      foreach ($_SESSION['ingre'] as $ingre) {
-        $listeIngreComm = new ListeIngreComm(null, $idComm, $ingre);
-        $listeIngreCommDAO->newListeIngreComm($listeIngreComm);
-        $ingredientDAO->decrementIngredient($ingre);
+      if(isset($_SESSION['ingre'])){
+        foreach ($_SESSION['ingre'] as $ingre) {
+          if($ingre != -1){
+            $listeIngreComm = new ListeIngreComm(null, $idComm, $ingre);
+            $listeIngreCommDAO->newListeIngreComm($listeIngreComm);
+            $ingredientDAO->decrementIngredient($ingre);
+          }
+        }
       }
       unset($_SESSION['prod']);
       unset($_SESSION['ingre']);

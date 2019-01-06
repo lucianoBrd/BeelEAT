@@ -14,7 +14,9 @@ class Commande
 
   private $_menu_comm;
 
-  public function __construct($id_comm, $date_comm, $user_comm, $prix_comm, $statut_comm, $menu_comm)
+  private $_prod_comm;
+
+  public function __construct($id_comm, $date_comm, $user_comm, $prix_comm, $statut_comm, $menu_comm, $prod_comm)
   {
     $this->_id_comm = $id_comm;
     $this->_date_comm = $date_comm;
@@ -22,6 +24,7 @@ class Commande
     $this->_prix_comm = $prix_comm;
     $this->_statut_comm = $statut_comm;
     $this->_menu_comm = $menu_comm;
+    $this->_prod_comm = $prod_comm;
   }
 
   public function getCommId() {
@@ -70,5 +73,13 @@ class Commande
 
   public function setMenuComm($menu_comm){
     $this->_menu_comm = $menu_comm;
+  }
+
+  public function getProdComm() {
+    return $this->_prod_comm;
+  }
+
+  public function setProdComm($prod_comm){
+    $this->_prod_comm = $prod_comm;
   }
 }

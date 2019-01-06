@@ -27,20 +27,28 @@
                 <th>Total</th>
                 <th>Supprimer</th>
               </tr>
+              <?php
+                if(isset($menu)){
+              ?>
               <tr>
                 <td>
                   <h5 class="product-title font-alt"><?=$menu->getNom()?></h5>
                   <?php
                     foreach ($listeProd as $prod) {
-                      echo '<h6>'.$prod[0]->getNom().'</h6>
-                            <img src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
-                      if($prod[0]->getType() == "sandwich"){
-                        echo '<ul>';
-                        foreach ($listeIngre as $ingre) {
-                          echo '<li><h7>'.$ingre->getNom().'</h7></li>';
-
+                      if($prod){
+                        echo '<h6>'.$prod[0]->getNom().'</h6>
+                              <img src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
+                        if($prod[0]->getType() == "sandwich"){
+                          if($listeIngre){
+                            echo '<ul>';
+                            foreach ($listeIngre as $ingre) {
+                              if($ingre){
+                                echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+                              }
+                            }
+                            echo '</ul>';
+                          }
                         }
-                        echo '</ul>';
                       }
                     }
                   ?>
@@ -56,6 +64,42 @@
                 </td>
                 <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td>
               </tr>
+              <?php
+                } else {
+              ?>
+              <tr>
+                <td>
+                  <h5 class="product-title font-alt"><?=$prod[0]->getNom()?></h5>
+                  <?php
+                        echo '<h6>'.$prod[0]->getNom().'</h6>
+                              <img src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
+                        if($prod[0]->getType() == "sandwich"){
+                          if($listeIngre){
+                            echo '<ul>';
+                            foreach ($listeIngre as $ingre) {
+                              if($ingre){
+                                echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+                              }
+                            }
+                            echo '</ul>';
+                          }
+                        }
+                  ?>
+                </td>
+                <td class="hidden-xs">
+                  <h5 class="product-title font-alt"><?=$prod[0]->getPrix()?>€</h5>
+                </td>
+                <td>
+                  <input class="form-control" type="number" name="" value="1" max="50" min="1"/>
+                </td>
+                <td>
+                  <h5 class="product-title font-alt"><?=$prod[0]->getPrix()?>€</h5>
+                </td>
+                <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td>
+              </tr>
+              <?php
+                }
+              ?>
             </tbody>
           </table>
         </div>
@@ -63,7 +107,7 @@
       <div class="row">
         <div class="col-sm-3 col-sm-offset-9">
           <div class="form-group">
-            <a class="btn btn-block btn-round btn-d pull-right" href="?page=commande">Valider la commande</a>
+            <a class="btn btn-block btn-round btn-d pull-right" href="?page=commande<?=!isset($menu)?'&prod='.$prod[0]->getProdId():''?>">Valider la commande</a>
           </div>
         </div>
       </div>
@@ -76,7 +120,7 @@
               <tbody>
                 <tr>
                   <th>Total de la commande :</th>
-                  <td><?=$menu->getPrix()?>€</td>
+                  <td><?=isset($menu)?$menu->getPrix():$prod[0]->getPrix()?>€</td>
                 </tr>
                 <tr>
                   <th>Frais de livraisons :</th>
@@ -84,11 +128,11 @@
                 </tr>
                 <tr class="shop-Cart-totalprice">
                   <th>Total :</th>
-                  <td><?=$menu->getPrix()?>€</td>
+                  <td><?=isset($menu)?$menu->getPrix():$prod[0]->getPrix()?>€</td>
                 </tr>
               </tbody>
             </table>
-            <a class="btn btn-lg btn-block btn-round btn-d" href="?page=commande">Valider la commande</a>
+            <a class="btn btn-lg btn-block btn-round btn-d" href="?page=commande<?=!isset($menu)?'&prod='.$prod[0]->getProdId():''?>">Valider la commande</a>
           </div>
         </div>
       </div>

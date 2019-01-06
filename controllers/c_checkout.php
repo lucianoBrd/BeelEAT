@@ -32,6 +32,16 @@ if(!isset($_SESSION['connect'])){
         }
       }
     }
+  } elseif(isset($_GET['id'])){
+    $id = htmlspecialchars($_GET['id']);
+    $prod = $produitDAO->getProduitByIDJoinImage($id);
+    $listeIngre = array();
+    if(isset($_SESSION['ingre'])){
+      foreach ($_SESSION['ingre'] as $ingre)  {
+        $listeIngre[] = $ingredientDAO->getIngredientByID($ingre);
+      }
+    }
+
   } else {
     header('Location: ../');
   }

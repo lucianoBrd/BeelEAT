@@ -21,6 +21,19 @@ if(!isset($_SESSION['connect'])){
         $i++;
       }
       header('Location: ../?page=checkout');
+    } elseif(isset($_GET['prod'])){
+      $prod = htmlspecialchars($_GET['prod']);
+      $_SESSION['prod'] = $prod;
+      $_SESSION['ingre'][] = $_POST[3];
+      $_SESSION['ingre'][] = $_POST[4];
+      $i = 0;
+      foreach ( $_POST as $post => $val )  {
+        if($i>4){
+          $_SESSION['ingre'][] = $_POST[$i];
+        }
+        $i++;
+      }
+      header('Location: ../?page=checkout&id='.$prod);
     }
   }
 ?>

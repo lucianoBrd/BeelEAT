@@ -37,21 +37,27 @@ window.onload = function () {
       champChoose.parentNode.parentNode.parentNode.style.backgroundColor = "#e7f5f2";
       if(champChoose.name == "sandwich"){
         sandwich = champChoose.value;
-        sauce = 0;
-        viande = 0;
-        garniture = [];
-        var modal = champChoose.parentNode.parentNode.parentNode.parentNode.nextElementSibling;
-        var sauceSelect = modal.children[0].children[1].children[0].children[0].children[0].children[0];
-        var viandeSelect = modal.children[0].children[1].children[0].children[0].children[2].children[0];
-        var garnitureSelect = modal.children[0].children[1].children[0].children[0].children[1].children;
-        sauce = sauceSelect.options[sauceSelect.selectedIndex].value;
-        viande = viandeSelect.options[viandeSelect.selectedIndex].value;
+        try{
+          sauce = 0;
+          viande = 0;
+          garniture = [];
+          var modal = champChoose.parentNode.parentNode.parentNode.parentNode.nextElementSibling;
+          var sauceSelect = modal.children[0].children[1].children[0].children[0].children[0].children[0];
+          var viandeSelect = modal.children[0].children[1].children[0].children[0].children[2].children[0];
+          var garnitureSelect = modal.children[0].children[1].children[0].children[0].children[1].children;
+          sauce = sauceSelect.options[sauceSelect.selectedIndex].value;
+          viande = viandeSelect.options[viandeSelect.selectedIndex].value;
 
-        for (var i = 1; i < garnitureSelect.length; i++) {
-          var garnitureCheck = garnitureSelect[i].children[0].children[0];
-          if(garnitureCheck.checked){
-            garniture.push(garnitureCheck.value);
+          for (var i = 1; i < garnitureSelect.length; i++) {
+            var garnitureCheck = garnitureSelect[i].children[0].children[0];
+            if(garnitureCheck.checked){
+              garniture.push(garnitureCheck.value);
+            }
           }
+        } catch(error){
+          sauce = -1;
+          viande = -1;
+          garniture = -1;
         }
 
       } else if(champChoose.name == "boisson"){
@@ -66,11 +72,28 @@ window.onload = function () {
       });
     }
 
+    var s=0, b=0, d=0;
     choose.forEach(function(element) {
+      if(element.name == "sandwich"){
+        s++;
+      } else if(element.name == "boisson"){
+        b++;
+      } else if(element.name == "dessert"){
+        d++;
+      }
       element.addEventListener('click', function (event) {
           surligne(element);
       }, false);
     });
+    if(s==0){
+      sandwich = -1;
+    }
+    if(b==0){
+      boisson = -1;
+    }
+    if(d==0){
+      dessert = -1;
+    }
 
     sousChoix.forEach(function(element) {
       element.addEventListener('click', function (event) {
@@ -95,12 +118,32 @@ window.onload = function () {
         for (var i = 0; i < garniture.length; i++) {
           tabPost.push(garniture[i]);
         }
-        post('../?page=newComm&id='+id,tabPost);
+        var prod = $_GET('prod');
+        if(prod == null){
+          post('../?page=newComm&id='+id,tabPost);
+        } else {
+          post('../?page=newComm&prod='+prod,tabPost);
+        }
         // On envoie pas le formulaire
         event.preventDefault();
       }
     }, false);
 
+    // get $_GET
+    function $_GET(param) {
+    	var vars = {};
+    	window.location.href.replace( location.hash, '' ).replace(
+    		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    		function( m, key, value ) { // callback
+    			vars[key] = value !== undefined ? value : '';
+    		}
+    	);
+
+    	if ( param ) {
+    		return vars[param] ? vars[param] : null;
+    	}
+    	return vars;
+    }
     // Send $post
     function post(path, params, method) {
         method = method || "post"; // Set method to post by default if not specified.

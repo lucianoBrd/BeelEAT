@@ -114,7 +114,7 @@
 												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
 												<td class="sorting_1"><?=$commande[0]->getCommId()?></td>
 												<td><?=$commande[0]->getDateComm()?></td>
-												<td><?=$commande[3]->getPseudo()?><br/><?=$commande[3]->getEmail()?></td>
+												<td><?=sizeof($commande) == 5?$commande[3]->getPseudo():$commande[2]->getPseudo()?><br/><?=sizeof($commande) == 5?$commande[3]->getEmail():$commande[2]->getEmail()?></td>
 												<td><?=$commande[0]->getPrixComm()?></td>
 												<td><span class="label label-sm label-<?=$type?>"><?=$commande[0]->getStatutComm()?></span></td>
 												<td>
@@ -141,7 +141,7 @@
 																</div>
 																<div class="modal-footer">
 																	<button class="btn default" data-dismiss="modal" aria-hidden="true">Fermer</button>
-																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>&user=<?=$commande[3]->getId()?>" class="btn blue">Confirmer</a>
+																	<a href="?page=changeStatut&id=<?=$commande[0]->getCommId()?>&user=<?=sizeof($commande) == 5?$commande[3]->getId():$commande[2]->getId()?>" class="btn blue">Confirmer</a>
 																</div>
 															</div>
 														</div>

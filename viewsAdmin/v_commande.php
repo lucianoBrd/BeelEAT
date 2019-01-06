@@ -114,25 +114,37 @@
 												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
 												<td class="sorting_1">
                           <?=$commande[0]->getCommId()?>
-                          <h5><?=$commande[1]->getNom()?></h5>
+                          <h5><?=sizeof($commande) == 5?$commande[1]->getNom():$commande[1][0]->getNom()?></h5>
                           <?php
-                            if($commande[2] != null){
-                              foreach ($commande[2] as $prod) {
-                                echo '<h6>'.$prod[0]->getNom().'</h6>
-                                      <img class="img-responsive" src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
-																if($prod[0]->getType() == "sandwich" && $commande[4] != null){
-																	echo '<ul>';
-																	foreach ($commande[4] as $ingre) {
-																		echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+														if(sizeof($commande) == 5){
+	                            if($commande[2] != null){
+	                              foreach ($commande[2] as $prod) {
+	                                echo '<h6>'.$prod[0]->getNom().'</h6>
+	                                      <img class="img-responsive" src="'.$prod[1]->getLink().'" alt="'.$prod[1]->getName().'"/>';
+																	if($prod[0]->getType() == "sandwich" && $commande[4] != null){
+																		echo '<ul>';
+																		foreach ($commande[4] as $ingre) {
+																			echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+																		}
+																		echo '</ul>';
 																	}
-																	echo '</ul>';
-																}
-                              }
-                            }
+	                              }
+                            	}
+														} else {
+	                            echo '<h6>'.$commande[1][0]->getNom().'</h6>
+	                                  <img class="img-responsive" src="'.$commande[1][1]->getLink().'" alt="'.$commande[1][1]->getName().'"/>';
+	                            if($commande[1][0]->getType() == "sandwich" && $commande[3] != null){
+	                              echo '<ul>';
+	                              foreach ($commande[3] as $ingre) {
+	                                echo '<li><h7>'.$ingre->getNom().'</h7></li>';
+	                              }
+	                              echo '</ul>';
+	                            }
+	                          }
                           ?>
                         </td>
 												<td><?=$commande[0]->getDateComm()?></td>
-												<td><?=$commande[3]->getPseudo()?><br/><?=$commande[3]->getEmail()?></td>
+												<td><?=sizeof($commande) == 5?$commande[3]->getPseudo():$commande[2]->getPseudo()?><br/><?=sizeof($commande) == 5?$commande[3]->getEmail():$commande[2]->getEmail()?></td>
 												<td><?=$commande[0]->getPrixComm()?></td>
 												<td><span class="label label-sm label-<?=$type?>"><?=$commande[0]->getStatutComm()?></span></td>
 												<td>
@@ -159,7 +171,7 @@
 																</div>
 																<div class="modal-footer">
 																	<button class="btn default" data-dismiss="modal" aria-hidden="true">Fermer</button>
-																	<a href="?page=changeStatut&before=commande&id=<?=$commande[0]->getCommId()?>&user=<?=$commande[3]->getId()?>" class="btn blue">Confirmer</a>
+																	<a href="?page=changeStatut&before=commande&id=<?=$commande[0]->getCommId()?>&user=<?=sizeof($commande) == 5?$commande[3]->getId():$commande[2]->getId()?>" class="btn blue">Confirmer</a>
 																</div>
 															</div>
 														</div>
