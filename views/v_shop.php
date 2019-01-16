@@ -191,8 +191,8 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-3 mb-sm-20">
+                        <div class="module-subtitle font-serif">Sauce</div>
                         <select class="form-control" name="sauce">
-                          <div class="module-subtitle font-serif">Sauce</div>
                           <option value="0" selected="selected">Sauce</option>
                           <?php
                             foreach($ingreListe as $ingredient){
