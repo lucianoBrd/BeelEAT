@@ -192,6 +192,7 @@
                     <div class="row">
                       <div class="col-sm-3 mb-sm-20">
                         <select class="form-control" name="sauce">
+                          <div class="module-subtitle font-serif">Sauce</div>
                           <option value="0" selected="selected">Sauce</option>
                           <?php
                             foreach($ingreListe as $ingredient){
@@ -223,6 +224,7 @@
                           ?>
                       </div>
                       <div class="col-sm-3 mb-sm-20">
+                        <div class="module-subtitle font-serif">Viande</div>
                         <select class="form-control" name="viande">
                           <option value="0" selected="selected">Viande</option>
                           <?php
