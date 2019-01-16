@@ -42,8 +42,8 @@ window.onload = function () {
           viande = 0;
           garniture = [];
           var modal = champChoose.parentNode.parentNode.parentNode.parentNode.nextElementSibling;
-          var sauceSelect = modal.children[0].children[1].children[0].children[0].children[0].children[0];
-          var viandeSelect = modal.children[0].children[1].children[0].children[0].children[2].children[0];
+          var sauceSelect = modal.children[0].children[1].children[0].children[0].children[0].children[1];
+          var viandeSelect = modal.children[0].children[1].children[0].children[0].children[2].children[1];
           var garnitureSelect = modal.children[0].children[1].children[0].children[0].children[1].children;
           sauce = sauceSelect.options[sauceSelect.selectedIndex].value;
           viande = viandeSelect.options[viandeSelect.selectedIndex].value;
@@ -55,6 +55,7 @@ window.onload = function () {
             }
           }
         } catch(error){
+          alert(error);
           sauce = -1;
           viande = -1;
           garniture = -1;
