@@ -55,7 +55,6 @@ window.onload = function () {
             }
           }
         } catch(error){
-          alert(error);
           sauce = -1;
           viande = -1;
           garniture = -1;
