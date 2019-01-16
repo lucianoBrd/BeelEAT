@@ -94,6 +94,22 @@
 			$id = htmlspecialchars($_GET['id']);
       $menu = $menuDAO->getMenuJoinImageById($id);
       $listeProd = $listeProdDAO->getListeProduitById($id);
+      if(isset($_POST['nom']) && isset($_POST['statut']) && isset($_POST['prix'])){
+        if(!empty($_POST['nom']) && !empty($_POST['statut']) && !empty($_POST['prix'])){
+
+          $error = false;
+          $nom 			= htmlspecialchars($_POST['nom']);
+          $statut 	= htmlspecialchars($_POST['statut']);
+          $prix 	= htmlspecialchars($_POST['prix']);
+          $menu = new Menu($id, $nom, null, $statut, $prix);
+          $insert = $menuDAO->updateMenu($menu);
+          if($insert){
+            header('Location: ?page='.$page.'&error=SUCCESS&id='.$id);
+          }else {
+            header('Location: ?page='.$page.'&error=ERREUR&id='.$id);
+          }
+        }
+      }
 
 		}
 		if(isset($_GET['error'])){

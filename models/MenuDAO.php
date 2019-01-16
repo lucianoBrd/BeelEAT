@@ -99,5 +99,17 @@ class MenuDAO extends DAO{
     }
   }
 
+  public function updateMenu($menu){
+    $requete = "UPDATE menu SET nom_menu = ?, statut_menu = ?, prix_menu = ?
+                WHERE id_menu = ?";
+    $donnees = array($menu->getNom(), $menu->getStatut(), $menu->getPrix(), $menu->getMenuId());
+    $res = $this->queryInsert($requete, $donnees);
+    if($res == false){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }
 ?>

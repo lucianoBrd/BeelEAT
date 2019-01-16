@@ -191,12 +191,12 @@
 												<tbody>
 												<tr>
 													<td>
-														<?=isset($id)? '<a href="'.link.$pLink.'" class="fancybox-button" data-rel="fancybox-button">
-														<img class="img-responsive" src="'.link.$pLink.'" alt="'.$pImgName.'">
+														<?=isset($id)? '<a href="'.$menu[1]->getLink().'" class="fancybox-button" data-rel="fancybox-button">
+														<img class="img-responsive" src="'.$menu[1]->getLink().'" alt="'.$menu[1]->getName().'">
 														</a>' : ''?>
 													</td>
 													<td>
-														<?=isset($id)? '<input type="text" class="form-control" name="imgName" value="'.$pImgName.'">' : ''?>
+														<?=isset($id)? '<input type="text" class="form-control" name="imgName" value="'.$menu[1]->getName().'">' : ''?>
 													</td>
 												</tr>
 
