@@ -11,5 +11,4 @@ RedirectMatch 404 /controllersAdmin
 RedirectMatch 404 /config
 RedirectMatch 404 /email
 RedirectMatch 404 /entities
-RedirectMatch 404 /lib
 RedirectMatch 404 /models
