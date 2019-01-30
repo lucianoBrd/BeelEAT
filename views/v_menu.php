@@ -10,24 +10,22 @@
         </div>
         <div class="collapse navbar-collapse" id="custom-collapse">
           <ul class="nav navbar-nav navbar-right">
+            <?php
+              if(!isset($_SESSION['connect'])){
+            ?>
+            <li class="dropdown"><a href="?page=inscription">Inscription</a>
+            <?php
+              }
+              if(isset($_SESSION['connect'])){
+            ?>
             <li class="dropdown"><a class="dropdown-toggle" href="../" data-toggle="dropdown">Accueil</a>
               <ul class="dropdown-menu">
-                <?php
-                  if(isset($_SESSION['connect'])){
-                ?>
                 <li><a href="?page=accueil#commande">Commander</a></li>
-                <?php
-                  }
-                  if(!isset($_SESSION['connect'])){
-                ?>
-                <li><a href="?page=inscription">Inscription</a></li>
-                <?php
-                  }
-                ?>
               </ul>
             </li>
 
             <?php
+              }
               if(isset($_SESSION['connect'])){
             ?>
             <li class="dropdown"><a class="dropdown-toggle" href="" data-toggle="dropdown">Mon compte</a>
