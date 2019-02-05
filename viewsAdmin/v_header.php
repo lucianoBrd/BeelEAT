@@ -9,6 +9,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>BeelEAT | Admin</title>
+<meta http-equiv="refresh" content="30" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
@@ -66,7 +67,7 @@
 				<ul class="nav navbar-nav pull-right">
 					<li class="separator hide">
 					</li>
-					
+
 					<li class="separator hide">
 					</li>
 
