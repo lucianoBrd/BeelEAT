@@ -16,7 +16,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Dashboard <small>accueil</small></h1>
+					<h1>Ingredient <small>edition</small></h1>
 				</div>
 				<!-- END PAGE TITLE -->
 				<!-- BEGIN PAGE TOOLBAR -->
@@ -48,8 +48,7 @@
 									<div class="caption">
 										<i class="icon-basket font-green-sharp"></i>
 										<span class="caption-subject font-green-sharp bold uppercase">
-										Edit ingrdedient </span>
-										<span class="caption-helper">Man Tops</span>
+										Editer ingredient </span>
 									</div>
 									<div class="actions btn-set">
 										<a href="?page=ingredient" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>

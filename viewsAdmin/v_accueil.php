@@ -16,7 +16,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Dashboard <small>accueil</small></h1>
+					<h1>Commande</h1>
 				</div>
 				<!-- END PAGE TITLE -->
 				<!-- BEGIN PAGE TOOLBAR -->
@@ -45,29 +45,14 @@
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="icon-basket font-green-sharp"></i>
-								<span class="caption-subject font-green-sharp bold uppercase">Commande</span>
+								<span class="caption-subject font-green-sharp bold uppercase">Toutes les commandes</span>
 							</div>
 						</div>
 						<div class="portlet-body">
 							<div class="table-container">
-								<div class="table-actions-wrapper">
-									<span>
-									</span>
-									<select class="table-group-action-input form-control input-inline input-small input-sm">
-										<option value="">Select...</option>
-										<option value="Cancel">Cancel</option>
-										<option value="Cancel">Hold</option>
-										<option value="Cancel">On Hold</option>
-										<option value="Close">Close</option>
-									</select>
-									<button class="btn btn-sm yellow table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
-								</div>
 								<table class="table table-striped table-bordered table-hover" id="datatable_orders">
 								<thead>
 								<tr role="row" class="heading">
-									<th width="2%">
-										<input type="checkbox" class="group-checkable">
-									</th>
 									<th width="5%">
 										 Numero&nbsp;commande
 									</th>
@@ -111,7 +96,6 @@
 											}
 										?>
 											<tr role="row" class="<?=$class?>">
-												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
 												<td class="sorting_1"><?=$commande[0]->getCommId()?></td>
 												<td><?=$commande[0]->getDateComm()?></td>
 												<td><?=sizeof($commande) == 5?$commande[3]->getPseudo():$commande[2]->getPseudo()?><br/><?=sizeof($commande) == 5?$commande[3]->getEmail():$commande[2]->getEmail()?></td>

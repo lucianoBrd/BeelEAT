@@ -16,7 +16,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Commerce <small>Editer Menu</small></h1>
+					<h1>Menu <small>edition</small></h1>
 				</div>
 				<!-- END PAGE TITLE -->
 				<!-- BEGIN PAGE TOOLBAR -->
@@ -49,7 +49,6 @@
 										<i class="icon-basket font-green-sharp"></i>
 										<span class="caption-subject font-green-sharp bold uppercase">
 										Editer Menu </span>
-										<span class="caption-helper">Man Tops</span>
 									</div>
 									<div class="actions btn-set">
 										<a href="?page=menuB" class="btn btn-default btn-circle"><i class="fa fa-angle-left"></i> Back</a>

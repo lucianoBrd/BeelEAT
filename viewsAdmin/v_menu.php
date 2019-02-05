@@ -13,42 +13,29 @@
       <li class="start <?=$page == 'accueil' ? 'active' : '' ?>">
         <a href="../">
         <i class="icon-home"></i>
-        <span class="title">Dashboard</span>
+        <span class="title">Commande</span>
         </a>
       </li>
-      <li class="<?=$page == 'commande'|| $page == 'products'|| $page == 'productsE'|| $page == 'ingredient'|| $page == 'ingredientE' || $page == 'menuB' || $page == 'menuE'? 'active open' : '' ?>">
-        <a href="javascript:;">
+      <li class="start <?=$page == 'commande' ? 'active' : '' ?>">
+        <a href="?page=commande">
         <i class="icon-basket"></i>
-        <span class="title">Commerce</span>
-        <span class="arrow "></span>
+        <span class="title">Commande cuisine</span>
         </a>
-        <ul class="sub-menu">
-          <li>
-            <a href="../">
-            <i class="icon-home"></i>
-            Dashboard</a>
-          </li>
-          <li class="<?=$page == 'commande' ? 'active' : '' ?>">
-            <a href="?page=commande">
-            <i class="icon-basket"></i>
-            Commande</a>
-          </li>
-          <li class="<?=$page == 'menuB' || $page == 'menuE' ? 'active' : '' ?>">
-            <a href="?page=menuB">
-            <i class="icon-pencil"></i>
-            Menu</a>
-          </li>
-          <li class="<?=$page == 'products' || $page == 'productsE' ? 'active' : '' ?>">
-            <a href="?page=products">
-            <i class="icon-handbag"></i>
-            Produit</a>
-          </li>
-          <li class="<?=$page == 'ingredient' || $page == 'ingredientE' ? 'active' : '' ?>">
-            <a href="?page=ingredient">
-            <i class="icon-handbag"></i>
-            Ingredient</a>
-          </li>
-        </ul>
+      </li>
+      <li class="<?=$page == 'menuB' || $page == 'menuE' ? 'active' : '' ?>">
+        <a href="?page=menuB">
+        <i class="icon-pencil"></i>
+        Menu</a>
+      </li>
+      <li class="<?=$page == 'products' || $page == 'productsE' ? 'active' : '' ?>">
+        <a href="?page=products">
+        <i class="icon-handbag"></i>
+        Produit</a>
+      </li>
+      <li class="<?=$page == 'ingredient' || $page == 'ingredientE' ? 'active' : '' ?>">
+        <a href="?page=ingredient">
+        <i class="icon-handbag"></i>
+        Ingredient</a>
       </li>
     </ul>
     <!-- END SIDEBAR MENU -->

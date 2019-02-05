@@ -16,7 +16,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Dashboard <small>accueil</small></h1>
+					<h1>Menu</h1>
 				</div>
 				<!-- END PAGE TITLE -->
 				<!-- BEGIN PAGE TOOLBAR -->
@@ -44,8 +44,7 @@
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="fa fa-gift font-green-sharp"></i>
-								<span class="caption-subject font-green-sharp bold uppercase">Products</span>
-								<span class="caption-helper">manage products...</span>
+								<span class="caption-subject font-green-sharp bold uppercase">Menu</span>
 							</div>
 							<div class="actions">
 								<div class="btn-group">
@@ -57,85 +56,27 @@
 						</div>
 						<div class="portlet-body">
 							<div class="table-container">
-								<div class="table-actions-wrapper">
-									<span>
-									</span>
-									<select class="table-group-action-input form-control input-inline input-small input-sm">
-										<option value="">Select...</option>
-										<option value="publish">Publish</option>
-										<option value="unpublished">Un-publish</option>
-										<option value="delete">Delete</option>
-									</select>
-									<button class="btn btn-sm yellow table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
-								</div>
 								<table class="table table-striped table-bordered table-hover" id="datatable_products">
 								<thead>
 								<tr role="row" class="heading">
-									<th width="1%">
-										<input type="checkbox" class="group-checkable">
-									</th>
 									<th width="10%">
 										 ID
 									</th>
 									<th width="15%">
-										 Menu&nbsp;Name
+										 Nom
 									</th>
 									<th width="15%">
 										 Prix
 									</th>
 									<th width="25%">
-										 Date&nbsp;Created
+										 Date&nbsp;de&nbsp;création
 									</th>
 									<th width="10%">
-										 Status
+										 Statut
 									</th>
 									<th width="10%">
 										 Actions
 									</th>
-								</tr>
-								<tr role="row" class="filter">
-									<td>
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_id">
-									</td>
-									<td>
-										<input type="text" class="form-control form-filter input-sm" name="product_name">
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<input type="text" class="form-control form-filter input-sm" name="product_quantity_from" placeholder="From"/>
-										</div>
-										<input type="text" class="form-control form-filter input-sm" name="product_quantity_to" placeholder="To"/>
-									</td>
-									<td>
-										<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_from" placeholder="From">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-										<div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-											<input type="text" class="form-control form-filter input-sm" readonly name="product_created_to " placeholder="To">
-											<span class="input-group-btn">
-											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-											</span>
-										</div>
-									</td>
-									<td>
-										<select name="product_status" class="form-control form-filter input-sm">
-											<option value="">Select...</option>
-											<option value="published">Published</option>
-											<option value="notpublished">Not Published</option>
-											<option value="deleted">Deleted</option>
-										</select>
-									</td>
-									<td>
-										<div class="margin-bottom-5">
-											<button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
-										</div>
-										<button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
-									</td>
 								</tr>
 								</thead>
 								<tbody>
@@ -152,7 +93,6 @@
 												$type="danger";
 											}
 											echo '<tr role="row" class="'.$class.'">
-												<td><div class="group-checkable"><span><input type="checkbox" name="id[]" value="1"></span></div></td>
 												<td class="sorting_1">'.$menu->getMenuId().'</td>
 												<td>'.$menu->getNom().'</td>
 												<td>'.$menu->getPrix().'</td>
