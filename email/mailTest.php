@@ -11,10 +11,6 @@ function email($destinataire, $mailTitre, $titre, $sousTitre, $description){
 	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-	<!--IMPORTANT:
-	Before deploying this email template into your application make sure you convert all the css code in <style> tag using http://beaker.mailchimp.com/inline-css.
-	Chrome and other few mail clients do not support <style> tag so the above converter from mailchip will make sure that all the css code will be converted into inline css.
-	-->
 	<title>BeelEAT</title>
 	<style type="text/css">
 	html { -webkit-text-size-adjust:none; -ms-text-size-adjust: none;}

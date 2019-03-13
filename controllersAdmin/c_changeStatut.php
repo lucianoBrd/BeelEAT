@@ -26,7 +26,7 @@
         $update = $commandeDAO->updateStatutCommande($commande);
         if($update){
           if($commande->getStatutComm() == 'preparation'){
-            email($user->getEmail(), 'BeelEAT | Votre commande est prête', 'Votre commande est prête', 'Bonjour '.$user->getPseudo().',', 'Votre commande numéro '.$id.' est prête. Vous avez 30 minutes pour venir la récupérée.');
+            email($user->getEmail(), 'BeelEAT | Votre commande est prête', 'Votre commande est prête', 'Bonjour '.$user->getPseudo().',', 'Votre commande numéro '.$id.' est prête. Vous avez 30 minutes pour venir la récupérer.');
           }
           header('Location: ../?page='.$before);
         } else {
