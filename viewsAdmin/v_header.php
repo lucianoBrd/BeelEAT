@@ -9,7 +9,9 @@
 <head>
 <meta charset="utf-8"/>
 <title>BeelEAT | Admin</title>
+<?php if($page=="commande" || $page=="accueil"){ ?>
 <meta http-equiv="refresh" content="30" />
+<?php } ?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
