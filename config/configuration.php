@@ -3,10 +3,10 @@
 // Accès base de données
 const DEV = FALSE;
 
-const BD_HOST = !DEV?'emiliengzsbeel.mysql.db' : 'localhost';
-const BD_DBNAME = !DEV?'emiliengzsbeel' : 'formation_members';
-const BD_USER = !DEV?'emiliengzsbeel' : 'root';
-const BD_PWD = !DEV?'Beeleat01' : '';
+const BD_HOST = !DEV?'' : 'localhost';
+const BD_DBNAME = !DEV?'' : 'formation_members';
+const BD_USER = !DEV?'' : 'root';
+const BD_PWD = !DEV?'' : '';
 const MAIL_LINK = !DEV?'https://beeleat.lucien-brd.com/' : 'https://localhost/';
 
 // Langue du site
